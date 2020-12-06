@@ -55,12 +55,12 @@ public class PlayerControls : MonoBehaviour
         if (spaceUp == true)
         {
             fastness = 0.2f;
-            animator.speed = 2;
+            animator.speed = 4;
         }
         else
         {
             fastness = 0.1f;
-            animator.speed = 1;
+            animator.speed = 4;
         }
 
 
