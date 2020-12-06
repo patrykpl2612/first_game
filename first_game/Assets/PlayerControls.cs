@@ -7,34 +7,40 @@ public class PlayerControls : MonoBehaviour
     public Sprite[] spriteArray;
     public SpriteRenderer spriteRenderer;
     public Animator animator;
-
     public Vector2 speed = new Vector2(50, 50);
     public float fastness;
 
+
+    public int FPS_LIMIT = 30;
+    public int default_animation_speed = 2;
+    public float default_player_speed = 0.1f;
+
+
     void Update()
     {
+  
+        int x = 0;      // od -1 do 1
+        int y = 0;      // od -1 do 1
 
-        int x = 0;
-        int y = 0;
+        bool up = Input.GetButton("Up");
+        bool down = Input.GetButton("Down");
+        bool left = Input.GetButton("Left");
+        bool right = Input.GetButton("Right");
+        bool space = Input.GetButton("Run");
+       // bool walking = up || down || left || right;
+        
+
+        bool[] inputList = { up, down, left, right, space };
+        string[] inputNames = { "Up", "Down", "Left", "Right"};
+        SendBoolInput(inputList, inputNames);
 
 
-        bool up = Input.GetButton("Fire1");
-        bool down = Input.GetButton("Fire2");
-        bool left = Input.GetButton("Fire3");
-        bool right = Input.GetButton("Jump");
-        bool spaceUp = Input.GetButton("Vertical");
-
-        animator.SetBool("Right", right);
-        animator.SetBool("Left", left);
-        animator.SetBool("Down", down);
-        animator.SetBool("Up", up);
-        animator.SetBool("SwitchAnim", SwitchAnim(up, down, left, right));
 
         if (up == true && down == false)
         {
             y = 1;
         }
-        if (down == true && up == false)
+        else if (down == true && up == false)
         {
             y = -1;
         }
@@ -43,24 +49,20 @@ public class PlayerControls : MonoBehaviour
         {
             x = -1;
         }
-        if (right == true && left == false)
+        else if (right == true && left == false)
         {
             x = 1;
         }
-        if (x == 0 && y == 0)
-        {
-            animator.speed = 0;
-        }
 
-        if (spaceUp == true)
+        if (space) 
         {
-            fastness = 0.2f;
-            animator.speed = 2;
+            fastness = default_player_speed * 2;
+            animator.speed = default_animation_speed * 2;           
         }
         else
         {
-            fastness = 0.1f;
-            animator.speed = 1;
+            fastness = default_player_speed;            // domyslne parametry gracza dotyczace jego predkosci i jego animacji
+            animator.speed = default_animation_speed;
         }
 
 
@@ -68,14 +70,22 @@ public class PlayerControls : MonoBehaviour
 
         movement *= Time.deltaTime;
         transform.Translate(movement);
+        
+
     }
 
     void Awake()
     {
-        Application.targetFrameRate = 30;
+        Application.targetFrameRate = FPS_LIMIT;  // Limit klatek !!!WRZUCICĆ TO DO OSOBNEGO PLIKU!!!
     }
-    public bool SwitchAnim(bool a, bool b, bool c, bool d)
+
+    public void SendBoolInput(bool[] inputList, string[] inputNames)
     {
-        return a || b || c || d;
+        int i = 0;
+        foreach (string inputName in inputNames)
+        {
+            animator.SetBool(inputName, inputList[i]);  //wysyła stan wartosci do animatora unity (mapowanie kontrolek,animacji)
+            i += 1;
+        }
     }
 }
