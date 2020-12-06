@@ -9,14 +9,14 @@ public class PlayerControls : MonoBehaviour
     public Animator animator;
     public Vector2 speed = new Vector2(50, 50);
     public float fastness;
-    public bool Collides = false;
 
 
+    public int FPS_LIMIT = 30;
     public int default_animation_speed = 2;
     public float default_player_speed = 0.1f;
 
 
-    void FixedUpdate()
+    void Update()
     {
   
         int x = 0;      // od -1 do 1
@@ -27,60 +27,57 @@ public class PlayerControls : MonoBehaviour
         bool left = Input.GetButton("Left");
         bool right = Input.GetButton("Right");
         bool space = Input.GetButton("Run");
+       // bool walking = up || down || left || right;
+        
 
         bool[] inputList = { up, down, left, right, space };
         string[] inputNames = { "Up", "Down", "Left", "Right"};
         SendBoolInput(inputList, inputNames);
 
 
-       
-            if (up == true && down == false)
-            {
-                y = 1;
-            }
-            else if (down == true && up == false)
-            {
-                y = -1;
-            }
 
-            if (left == true && right == false)
-            {
-                x = -1;
-            }
-            else if (right == true && left == false)
-            {
-                x = 1;
-            }
-
-            if (space)
-            {
-                fastness = default_player_speed * 2;
-                animator.speed = default_animation_speed * 2;
-            }
-            else
-            {
-                fastness = default_player_speed;            // domyslne parametry gracza dotyczace jego predkosci i jego animacji
-                animator.speed = default_animation_speed;
-            }
-
-
-        if (Collides == false)
+        if (up == true && down == false)
         {
-            Vector3 movement = new Vector3(speed.x * x * fastness, speed.y * y * fastness, 0);
-
-            movement *= Time.fixedDeltaTime;
-            transform.Translate(movement);
-
+            y = 1;
         }
-        Collides = false;
+        else if (down == true && up == false)
+        {
+            y = -1;
+        }
+
+        if (left == true && right == false)
+        {
+            x = -1;
+        }
+        else if (right == true && left == false)
+        {
+            x = 1;
+        }
+
+        if (space) 
+        {
+            fastness = default_player_speed * 2;
+            animator.speed = default_animation_speed * 2;           
+        }
+        else
+        {
+            fastness = default_player_speed;            // domyslne parametry gracza dotyczace jego predkosci i jego animacji
+            animator.speed = default_animation_speed;
+        }
+
+
+        Vector3 movement = new Vector3(speed.x * x * fastness, speed.y * y * fastness, 0);
+
+        movement *= Time.deltaTime;
+        transform.Translate(movement);
+        
+
     }
 
-
-    public void OnCollisionEnter2D(Collision2D coll) {
-        Collides = true;
+    void Awake()
+    {
+        Application.targetFrameRate = FPS_LIMIT;  // Limit klatek !!!WRZUCICĆ TO DO OSOBNEGO PLIKU!!!
     }
- 
-
 
     public void SendBoolInput(bool[] inputList, string[] inputNames)
     {
