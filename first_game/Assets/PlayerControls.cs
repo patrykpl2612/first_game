@@ -8,26 +8,18 @@ public class PlayerControls : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     public Animator animator;
 
-    public GameObject HeldItem;
-    public Vector2 speed = new Vector2(50, 50);
-    public bool Holding = false;
-    public float fastness;
-    public bool Collided=false;
-    public int x, y;
-    public string Facing = null;
 
+    public bool Holding = false; // Czy coś trzyma
+    public GameObject HeldItem;  // Co trzyma
+    public float fastness;       // Prędkość poruszania się
+    public bool Collided=false;  // Czy z czymś koliduje   
+    public string Facing = "S";  // Kierunek w który aktualnie patrzy
 
-
-    public int default_animation_speed = 2;
+    public int default_animation_speed = 2;   
     public float default_player_speed = 0.1f;
-
 
     void FixedUpdate()
     {
-  
-         x = 0;      // od -1 do 1
-         y = 0;      // od -1 do 1
-
         bool up = Input.GetButton("Up");
         bool down = Input.GetButton("Down");
         bool left = Input.GetButton("Left");
@@ -35,40 +27,46 @@ public class PlayerControls : MonoBehaviour
         bool space = Input.GetButton("Run");
         bool putDown = Input.GetButton("PutDown");
 
-
-
-        bool[] inputList = { up, down, left, right,};       //listy do przeslania booli do animatora
-        string[] inputNames = { "Up", "Down", "Left", "Right"};
+        bool[] inputList = { up, down, left, right, putDown,space};       
+        string[] inputNames = { "Up", "Down", "Left", "Right"}; //lista booli do przeslania do animatora
         SendBoolInput(inputList, inputNames);
 
+        ControlPlayer(inputList);
+  
 
+    }
 
-        if (up == true && down == false)
+    void ControlPlayer(bool[] Inputlist)
+    {
+        int x = 0;      // od -1 do 1
+        int y = 0;      // od -1 do 1    
+
+        if (Inputlist[0] == true && Inputlist[1] == false)
         {
             y = 1;
             Facing = "N";
         }
-        else if (down == true && up == false)
+        else if (Inputlist[1] == true && Inputlist[0] == false)
         {
             y = -1;
             Facing = "S";
         }
 
-        if (left == true && right == false)
+        if (Inputlist[2] == true && Inputlist[3] == false)
         {
             x = -1;
             Facing = "W";
         }
-        else if (right == true && left == false)
+        else if (Inputlist[3] == true && Inputlist[2] == false)
         {
             x = 1;
             Facing = "E";
         }
 
-        if (space) 
+        if (Inputlist[5])
         {
             fastness = default_player_speed * 2;
-            animator.speed = default_animation_speed * 2;           
+            animator.speed = default_animation_speed * 2;
         }
         else
         {
@@ -78,7 +76,7 @@ public class PlayerControls : MonoBehaviour
 
         if (Collided == false)
         {
-            Vector3 movement = new Vector3(speed.x * x * fastness, speed.y * y * fastness, 0);
+            Vector3 movement = new Vector3(50 * x * fastness, 50 * y * fastness, 0);
 
             movement *= Time.fixedDeltaTime;
             transform.Translate(movement);
@@ -88,14 +86,13 @@ public class PlayerControls : MonoBehaviour
         {
             Pickup(HeldItem);
         }
-        if (Holding && putDown && x == 0 && y == 0)
+        if (Holding && Inputlist[4] && x == 0 && y == 0)
         {
             Throw(HeldItem);
         }
-
         Collided = false;
-
     }
+
     void OnCollisionEnter2D(Collision2D Object)
     {
         Collided = true;
@@ -159,9 +156,6 @@ public class PlayerControls : MonoBehaviour
       
         Object.transform.SetParent(null);
     }
-
-
-
 
     public void SendBoolInput(bool[] inputList, string[] inputNames)
     {
