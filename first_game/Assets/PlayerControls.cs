@@ -11,10 +11,10 @@ public class PlayerControls : MonoBehaviour
     public float fastness;
     public bool Collides=false;
 
-    public int FPS_LIMIT = 30;
+ 
     public int default_animation_speed = 2;
     public float default_player_speed = 0.1f;
-    //tu cos ma byc
+
 
     void FixedUpdate()
     {
@@ -27,7 +27,6 @@ public class PlayerControls : MonoBehaviour
         bool left = Input.GetButton("Left");
         bool right = Input.GetButton("Right");
         bool space = Input.GetButton("Run");
-       // bool walking = up || down || left || right;
         
 
         bool[] inputList = { up, down, left, right, space };
@@ -75,14 +74,11 @@ public class PlayerControls : MonoBehaviour
         Collides = false;
 
     }
-    void OnCollisionEnter2D(Collision2D coll)
+    void OnCollisionEnter2D(Collision2D Object)
     {
         Collides = true;
     }
-    void Awake()
-    {
-        Application.targetFrameRate = FPS_LIMIT;  // Limit klatek !!!WRZUCICĆ TO DO OSOBNEGO PLIKU!!!
-    }
+
 
     public void SendBoolInput(bool[] inputList, string[] inputNames)
     {
