@@ -9,14 +9,14 @@ public class PlayerControls : MonoBehaviour
     public Animator animator;
     public Vector2 speed = new Vector2(50, 50);
     public float fastness;
-
+    public bool Collides=false;
 
     public int FPS_LIMIT = 30;
     public int default_animation_speed = 2;
     public float default_player_speed = 0.1f;
     //tu cos ma byc
 
-    void Update()
+    void FixedUpdate()
     {
   
         int x = 0;      // od -1 do 1
@@ -65,15 +65,20 @@ public class PlayerControls : MonoBehaviour
             animator.speed = default_animation_speed;
         }
 
+        if (Collides == false)
+        {
+            Vector3 movement = new Vector3(speed.x * x * fastness, speed.y * y * fastness, 0);
 
-        Vector3 movement = new Vector3(speed.x * x * fastness, speed.y * y * fastness, 0);
-
-        movement *= Time.deltaTime;
-        transform.Translate(movement);
-        
+            movement *= Time.fixedDeltaTime;
+            transform.Translate(movement);
+        }
+        Collides = false;
 
     }
-
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        Collides = true;
+    }
     void Awake()
     {
         Application.targetFrameRate = FPS_LIMIT;  // Limit klatek !!!WRZUCICĆ TO DO OSOBNEGO PLIKU!!!
