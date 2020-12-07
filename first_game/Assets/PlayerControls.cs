@@ -10,6 +10,7 @@ public class PlayerControls : MonoBehaviour
     public Vector2 speed = new Vector2(50, 50);
     public float fastness;
     public bool Collides=false;
+    public int x, y;
 
  
     public int default_animation_speed = 2;
@@ -19,8 +20,8 @@ public class PlayerControls : MonoBehaviour
     void FixedUpdate()
     {
   
-        int x = 0;      // od -1 do 1
-        int y = 0;      // od -1 do 1
+         x = 0;      // od -1 do 1
+         y = 0;      // od -1 do 1
 
         bool up = Input.GetButton("Up");
         bool down = Input.GetButton("Down");

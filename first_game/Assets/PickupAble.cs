@@ -5,33 +5,71 @@ using UnityEngine;
 public class PickupAble : MonoBehaviour 
 { 
     public bool PickedUp = false;
-    public float PlayerX;
-    public float PlayerY;
+    public Transform RockChild;
+    public Transform PlayerParent;
+    public GameObject Player;
+    public Animator PlayerAnimator;
 
 
-   void OnCollisionEnter2D(Collision2D Object)
+    void Start()
+    {   
+        RockChild = transform.Find("/InterRock");
+        PlayerParent = transform.Find("/Player");
+        Player = GameObject.Find("/Player");
+    }
+
+    void OnCollisionEnter2D(Collision2D Object)
    {
         var obiekt = Object.collider;
-        var playerPosition = GameObject.Find("Player").transform.position;
-        PlayerX = playerPosition[0];
-        PlayerY = playerPosition[1];
 
-        Debug.Log(PlayerX);
-        Debug.Log(PlayerY);
+        Vector3 playerPosition = GameObject.Find("Player").transform.position;
 
-        if (obiekt.transform.position == GameObject.Find("Player").transform.position) 
+        Vector3 rockPosition = playerPosition;
+        if (obiekt.transform.position == GameObject.Find("/Player").transform.position) 
         {
-        PickedUp = true;
+            PickedUp = true;
+            rockPosition[1] += 2.1f;
+            RockChild.transform.SetParent(PlayerParent, true);
+            RockChild.transform.Translate(rockPosition-RockChild.position);
         }
-
         
+
     }
     void FixedUpdate()
     {
-        if (PickedUp)
+
+        bool rzut = Input.GetButton("PutDown");
+  
+        if (PickedUp && rzut)
         {
-            gameObject.transform.Translate(PlayerX, PlayerY,0f);
+            PlayerAnimator = Player.GetComponent<Animator>();
+            
+            Vector3 playerPosition = GameObject.Find("Player").transform.position;
+            Vector3 rockPosition = playerPosition;
+              if (PlayerAnimator.GetCurrentAnimatorStateInfo(0).IsName("PlayerStandingLeft"))
+              {
+
+                  rockPosition[0] -= 3f;
+              }
+              if (PlayerAnimator.GetCurrentAnimatorStateInfo(0).IsName("PlayerStandingRight"))
+              {
+
+                  rockPosition[0] += 3f;
+              }
+              if (PlayerAnimator.GetCurrentAnimatorStateInfo(0).IsName("PlayerStandingUp"))
+              {
+
+                  rockPosition[1] += 3f;
+              }
+              if (PlayerAnimator.GetCurrentAnimatorStateInfo(0).IsName("PlayerStandingDown"))
+              {
+                  rockPosition[1] -= 3f;
+              }
+
+            RockChild.transform.Translate(rockPosition-RockChild.position);
+            RockChild.transform.SetParent(null);
+            PickedUp = false;
         }
-        PickedUp = false;
+       
     }
 }
