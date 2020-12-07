@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class PickupAble : MonoBehaviour
 {
-    public float HeightAbovePlayer = 2.1f;
-    public float ThrowRangeHorizontal = 3f;
-    public float ThrowRangeVertical = 3f;
+    public float HeightAbovePlayer = 2.1f;      //zmienna determinujaca wysokosc obiektu nad graczem
+    public float ThrowRangeHorizontal = 3f;     // zmienna determinujaca odleglosc rzutu obietku w X
+    public float ThrowRangeVertical = 3f;       // zmienna determinujaca odleglosc rzutu obietku w Y
 
     public float Get(string what)
     {
