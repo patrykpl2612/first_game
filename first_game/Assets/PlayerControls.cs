@@ -14,7 +14,7 @@ public class PlayerControls : MonoBehaviour
     public int FPS_LIMIT = 30;
     public int default_animation_speed = 2;
     public float default_player_speed = 0.1f;
-
+    //tu cos ma byc
 
     void Update()
     {
