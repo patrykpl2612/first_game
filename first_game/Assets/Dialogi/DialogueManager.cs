@@ -25,21 +25,23 @@ public class DialogueManager : MonoBehaviour
 
     public bool DisplayNextSentence()
     {
-        if (sentences.Count == 0)
-        {
-            EndDialogue();
-            return false;
-        }
+       
         string sentence=sentences.Dequeue();
         Debug.Log(sentence);
-        
+
+        if (sentences.Count == 0)
+        {
+
+            return EndDialogue();
+        }
+
         return true;
 
     }
 
-    void EndDialogue()
+    bool EndDialogue()
     {
-        Debug.Log("-----------------");
+        return false;
     }
   
 }
