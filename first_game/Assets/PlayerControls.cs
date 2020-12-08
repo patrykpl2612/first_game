@@ -32,7 +32,8 @@ public class PlayerControls : MonoBehaviour
         SendBoolInput(inputList, inputNames);
 
         ControlPlayer(inputList);
-  
+        
+
 
     }
 
