@@ -7,6 +7,7 @@ public class PlayerControls : MonoBehaviour
     public Sprite[] spriteArray;
     public SpriteRenderer spriteRenderer;
     public Animator animator;
+    public static bool IsInputEnabled;
 
 
     public bool Holding = false; // Czy coś trzyma
@@ -15,28 +16,41 @@ public class PlayerControls : MonoBehaviour
     public bool Collided=false;  // Czy z czymś koliduje   
     public string Facing = "S";  // Kierunek w który aktualnie patrzy
 
+
+
     public int default_animation_speed = 2;   
     public float default_player_speed = 0.1f;
 
     void FixedUpdate()
     {
-        bool up = Input.GetButton("Up");
-        bool down = Input.GetButton("Down");
-        bool left = Input.GetButton("Left");
-        bool right = Input.GetButton("Right");
-        bool space = Input.GetButton("Run");
-        bool putDown = Input.GetButton("PutDown");
+        if (IsInputEnabled)
+        {
+            bool up = Input.GetButton("Up");
+            bool down = Input.GetButton("Down");
+            bool left = Input.GetButton("Left");
+            bool right = Input.GetButton("Right");
+            bool space = Input.GetButton("Run");
+            bool putDown = Input.GetButton("PutDown");
 
-        bool[] inputList = { up, down, left, right, putDown,space};       
-        string[] inputNames = { "Up", "Down", "Left", "Right"}; //lista booli do przeslania do animatora
-        SendBoolInput(inputList, inputNames);
+            bool[] inputList = { up, down, left, right, putDown, space };
+            string[] inputNames = { "Up", "Down", "Left", "Right" }; //lis booli do przeslania do animatora
+            SendBoolInput(inputList, inputNames);
 
-        ControlPlayer(inputList);
+            ControlPlayer(inputList);
+        }
         
+
+
 
 
     }
 
+    
+    void Start()
+    {
+        IsInputEnabled = true;
+    }
+    
     void ControlPlayer(bool[] Inputlist)
     {
         int x = 0;      // od -1 do 1
