@@ -35,7 +35,7 @@ public class DialogueManager : MonoBehaviour
     public bool DisplayNextSentence()
     {
         string sentence = sentences.Dequeue();
-        dialogueText.text = sentence;
+        //dialogueText.text = sentence;
 
         if (sentences.Count == 0)
         {
@@ -45,10 +45,20 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
+            StopAllCoroutines();
+            StartCoroutine(TypeSentance(sentence));
             return true;
         }      
     }
-
+    IEnumerator TypeSentance(string sentance) // Wyswietla dialog literka po literce
+    {
+        dialogueText.text = "";
+        foreach (char letter in sentance.ToCharArray())
+        {
+            dialogueText.text += char.ToUpper(letter);
+            yield return null;
+        }
+    }
     bool EndDialogue()
     {
             animator.SetBool("DialogueOpen", false);

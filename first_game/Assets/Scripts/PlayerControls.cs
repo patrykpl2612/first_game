@@ -17,7 +17,7 @@ public class PlayerControls : MonoBehaviour
     public string Facing = "S";  // Kierunek w który aktualnie patrzy
 
 
-
+    
     public int default_animation_speed = 2;   
     public float default_player_speed = 0.1f;
 
