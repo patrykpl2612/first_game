@@ -9,7 +9,7 @@ public class DialogueManager : MonoBehaviour
     public Text dialogueText;
     public Animator animator;
     private Queue<string> sentences;
-
+    private GameObject NPC;
     void Start()
     {
         sentences = new Queue<string>();
@@ -21,6 +21,7 @@ public class DialogueManager : MonoBehaviour
     {
         animator.SetBool("DialogueOpen", true);
         nameText.text = dialogue.name;
+        NPC = GameObject.Find(dialogue.name);
         PlayerControls.IsInputEnabled = false;
         sentences.Clear();
         foreach(string sentence in dialogue.sentences)
@@ -52,11 +53,17 @@ public class DialogueManager : MonoBehaviour
     }
     IEnumerator TypeSentance(string sentance) // Wyswietla dialog literka po literce
     {
+
         dialogueText.text = "";
         foreach (char letter in sentance.ToCharArray())
         {
             dialogueText.text += char.ToUpper(letter);
-            yield return null;
+
+            for (int i = 0; i < 2; i++)
+            {
+                yield return null;
+            }
+            NPC.GetComponent<NPC>().PlayLetterSound();
         }
     }
     bool EndDialogue()

@@ -8,6 +8,7 @@ public class NPC : MonoBehaviour
 
     public Dialogue dialogue;
     public GameObject Player;
+    public AudioSource audioSource;
     private bool talking;
 
 
@@ -38,7 +39,10 @@ public class NPC : MonoBehaviour
     {
         FindObjectOfType<DialogueManager>().StartDialogue(dialogue);
     }
-
+    public void PlayLetterSound()
+    {
+        audioSource.Play();
+    }
 }//https://www.youtube.com/watch?v=_nRzoTzeyxU&feature=emb_title
    
    
