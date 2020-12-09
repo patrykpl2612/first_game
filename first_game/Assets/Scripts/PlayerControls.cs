@@ -8,17 +8,19 @@ public class PlayerControls : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     public Animator animator;
     public static bool IsInputEnabled;
+    public GameObject Pushing;
+    public string PushFacing;
 
-
+    public bool IsPushing = false;
     public bool Holding = false; // Czy coś trzyma
     public GameObject HeldItem;  // Co trzyma
     public float fastness;       // Prędkość poruszania się
-    public bool Collided=false;  // Czy z czymś koliduje   
+    public bool Collided = false;  // Czy z czymś koliduje   
     public string Facing = "S";  // Kierunek w który aktualnie patrzy
 
 
-    
-    public int default_animation_speed = 2;   
+
+    public int default_animation_speed = 2;
     public float default_player_speed = 0.1f;
 
     void FixedUpdate()
@@ -36,8 +38,12 @@ public class PlayerControls : MonoBehaviour
             string[] inputNames = { "Up", "Down", "Left", "Right" }; //lis booli do przeslania do animatora
             SendBoolInput(inputList, inputNames);
 
+
             ControlPlayer(inputList);
+            
+            
         }
+        
         
 
 
@@ -45,12 +51,12 @@ public class PlayerControls : MonoBehaviour
 
     }
 
-    
+
     void Start()
     {
         IsInputEnabled = true;
     }
-    
+
     void ControlPlayer(bool[] Inputlist)
     {
         int x = 0;      // od -1 do 1
@@ -89,6 +95,12 @@ public class PlayerControls : MonoBehaviour
             animator.speed = default_animation_speed;
         }
 
+        if (IsPushing && FacingIsPush(Inputlist[0], Inputlist[1], Inputlist[2], Inputlist[3],PushFacing) )
+        {
+            Pushing.GetComponent<PushAble>().Push(PushFacing);
+        }
+
+
         if (Collided == false)
         {
             Vector3 movement = new Vector3(50 * x * fastness, 50 * y * fastness, 0);
@@ -111,14 +123,38 @@ public class PlayerControls : MonoBehaviour
     void OnCollisionEnter2D(Collision2D Object)
     {
         Collided = true;
-
         GameObject CollidedObject = GameObject.Find(Object.collider.name);
         if (CollidedObject.GetComponent<PickupAble>() != null && Holding == false) // sprawdz czy obiekt mozna podniesc
         {
             Holding = true;
-            HeldItem = CollidedObject;          
-        }     
+            HeldItem = CollidedObject;
+        }
+
+        if (CollidedObject.GetComponent<PushAble>() != null)
+        {
+            IsPushing = true;
+            Pushing = CollidedObject;
+            PushFacing = Facing;
+        }
+
+
     }
+  
+    void OnCollisionExit2D(Collision2D Object)
+    {
+        GameObject CollidedObject = GameObject.Find(Object.collider.name);
+        if (CollidedObject.GetComponent<PushAble>() != null)
+        {
+            IsPushing = false;
+            Pushing = null;
+        }
+    }
+          
+    
+
+
+
+
 
     void Pickup(GameObject Object)
     {       
@@ -181,5 +217,37 @@ public class PlayerControls : MonoBehaviour
             i += 1;
         }
     }
+    
+    
+    
+    bool FacingIsPush(bool up, bool down, bool left, bool right,string Facing) //zwraca true jesli tylko jeden z 4 jest true
+    {
+        if (Facing == "N" && up && left == false && right == false )
+        {
+            return true;
+        }
+
+        if (Facing == "E" && right && up == false && down == false)
+        {
+            return true;
+        }
+        
+        if (Facing == "S" && down && left == false && right == false)
+        {
+            return true;
+        }
+        
+        if (Facing == "W" && left && up == false && down == false)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
+
 
 }
+
