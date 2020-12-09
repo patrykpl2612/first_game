@@ -11,14 +11,12 @@ public class PlayerControls : MonoBehaviour
     public GameObject Pushing;
     public string PushFacing;
 
-    public bool IsPushing = false;
+    public bool IsPushing = false; // czy cos pcha
     public bool Holding = false; // Czy coś trzyma
     public GameObject HeldItem;  // Co trzyma
     public float fastness;       // Prędkość poruszania się
     public bool Collided = false;  // Czy z czymś koliduje   
     public string Facing = "S";  // Kierunek w który aktualnie patrzy
-
-
 
     public int default_animation_speed = 2;
     public float default_player_speed = 0.1f;
@@ -50,7 +48,6 @@ public class PlayerControls : MonoBehaviour
 
 
     }
-
 
     void Start()
     {
@@ -150,12 +147,6 @@ public class PlayerControls : MonoBehaviour
         }
     }
           
-    
-
-
-
-
-
     void Pickup(GameObject Object)
     {       
         Object.transform.SetParent(transform, true);              
@@ -208,7 +199,7 @@ public class PlayerControls : MonoBehaviour
         Object.transform.SetParent(null);
     }
 
-    public void SendBoolInput(bool[] inputList, string[] inputNames)
+    void SendBoolInput(bool[] inputList, string[] inputNames)
     {
         int i = 0;
         foreach (string inputName in inputNames)
@@ -216,9 +207,7 @@ public class PlayerControls : MonoBehaviour
             animator.SetBool(inputName, inputList[i]);  //wysyła stan wartosci do animatora unity (mapowanie kontrolek,animacji)
             i += 1;
         }
-    }
-    
-    
+    }    
     
     bool FacingIsPush(bool up, bool down, bool left, bool right,string Facing) //zwraca true jesli tylko jeden z 4 jest true
     {
@@ -247,7 +236,6 @@ public class PlayerControls : MonoBehaviour
         }
 
     }
-
 
 }
 
