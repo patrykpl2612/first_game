@@ -564,11 +564,11 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 500158265}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 1
-  m_UseAutoMass: 0
-  m_Mass: 1
+  m_UseAutoMass: 1
+  m_Mass: 0.9046958
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -1473,7 +1473,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Pressed: 0
-  animator: {fileID: 0}
+  PressurePlateAnimator: {fileID: 1105201051}
 --- !u!50 &1105201050
 Rigidbody2D:
   serializedVersion: 4
@@ -1524,8 +1524,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1453696321}
   - component: {fileID: 1453696320}
-  - component: {fileID: 1453696322}
   - component: {fileID: 1453696323}
+  - component: {fileID: 1453696324}
+  - component: {fileID: 1453696322}
   m_Layer: 0
   m_Name: InterRock
   m_TagString: Untagged
@@ -1597,33 +1598,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!68 &1453696322
-EdgeCollider2D:
+--- !u!50 &1453696322
+Rigidbody2D:
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1453696319}
-  m_Enabled: 1
-  m_Density: 1
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 1
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0.1
-  m_Points:
-  - {x: -5.1200004, y: 0}
-  - {x: -4.6983595, y: -1.9938776}
-  - {x: -3.3376374, y: -2.3642104}
-  - {x: -1.9229777, y: -2.1042771}
-  - {x: -1.005999, y: -2.6942425}
-  - {x: 0.2508464, y: -2.6793969}
-  - {x: 1.7592083, y: -2.8252106}
-  - {x: 3.5930223, y: -2.7239041}
-  - {x: 5.082855, y: -1.7628348}
-  - {x: 5.3510633, y: -0.6292959}
-  - {x: -5.0994096, y: 0.016608745}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!114 &1453696323
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1639,6 +1634,32 @@ MonoBehaviour:
   HeightAbovePlayer: 2.1
   ThrowRangeHorizontal: 3
   ThrowRangeVertical: 3
+--- !u!61 &1453696324
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1453696319}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.0727613, y: 0.70608306}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 10.24, y: 5.41}
+    newSize: {x: 10.24, y: 5.41}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 9.609438, y: 4.083425}
+  m_EdgeRadius: 0
 --- !u!1 &1464210522
 GameObject:
   m_ObjectHideFlags: 0

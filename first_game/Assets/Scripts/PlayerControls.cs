@@ -16,7 +16,6 @@ public class PlayerControls : MonoBehaviour
     public bool Holding = false; // Czy coś trzyma
     public GameObject HeldItem;  // Co trzyma
     public float fastness;       // Prędkość poruszania się
-    public bool Collided = false;  // Czy z czymś koliduje   
     public string Facing = "S";  // Kierunek w który aktualnie patrzy
 
     public int default_animation_speed = 2;
@@ -114,13 +113,12 @@ public class PlayerControls : MonoBehaviour
         }
 
 
-        if (Collided == false)
-        {
-            Vector3 movement = new Vector3(50 * x * fastness, 50 * y * fastness, 0);
+       
+        Vector3 movement = new Vector3(50 * x * fastness, 50 * y * fastness, 0);
 
-            movement *= Time.fixedDeltaTime;
-            transform.Translate(movement);
-        }
+        movement *= Time.fixedDeltaTime;
+        transform.Translate(movement);
+        
 
         if (Holding)
         {
@@ -131,14 +129,23 @@ public class PlayerControls : MonoBehaviour
             Throw(HeldItem);
             
         }
-        Collided = false;
+
     }
 
     void OnCollisionEnter2D(Collision2D Object)
     {
-        Collided = true;
-        GameObject CollidedObject = GameObject.Find(Object.collider.name);
-        if (CollidedObject.GetComponent<PickupAble>() != null && Holding == false) // sprawdz czy obiekt mozna podniesc
+        GameObject CollidedObject = GameObject.Find(Object.collider.name);        
+       // bool IsPressurePlate = CollidedObject.GetComponent<PressurePlate>() != null;
+        
+
+        /*if (IsPressurePlate)
+        {
+            Collider2D PressurePlate = CollidedObject.GetComponent<Collider2D>();
+            PressurePlate.enabled = false;
+        } */
+
+        
+        if (CollidedObject.GetComponent<PickupAble>() != null && Holding == false ) // sprawdz czy obiekt mozna podniesc
         {
             Holding = true;
             HeldItem = CollidedObject;
@@ -157,11 +164,15 @@ public class PlayerControls : MonoBehaviour
     void OnCollisionExit2D(Collision2D Object)
     {
         GameObject CollidedObject = GameObject.Find(Object.collider.name);
-        if (CollidedObject.GetComponent<PushAble>() != null)
+        bool IsPushable = CollidedObject.GetComponent<PushAble>() != null;
+
+
+        if (IsPushable)
         {
             IsPushing = false;
             Pushing = null;
         }
+        
     }
 
     void Pickup(GameObject Object)
@@ -173,7 +184,7 @@ public class PlayerControls : MonoBehaviour
         Collider2D m_Collider = Object.GetComponent<Collider2D>();
         SpriteRenderer m_Renderer = Object.GetComponent<SpriteRenderer>();
 
-
+        
         if (m_Collider.enabled)
         {
             m_Collider.enabled = false;
