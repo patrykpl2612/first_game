@@ -23,6 +23,7 @@ public class PlayerControls : MonoBehaviour
     public float default_player_speed = 0.1f;
 
     private bool paused;
+    private Rect background= new Rect(0, 0, Screen.width, Screen.height);
 
     void Start()
     {
@@ -62,9 +63,15 @@ public class PlayerControls : MonoBehaviour
 
     void OnGUI() //GUI przy paused game
     {
+
         if (paused)
-        {   
-               // paused = togglePause();
+        {
+            GUILayout.BeginArea(background);
+                 GUILayout.BeginArea(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 50, 100, 100));
+                      GUILayout.Button("Click me");
+
+                 GUILayout.EndArea();
+            GUILayout.EndArea();
         }
     }
 
