@@ -24,6 +24,12 @@ public class PlayerControls : MonoBehaviour
 
     private bool paused;
 
+    void Start()
+    {
+        IsInputEnabled = true;
+        paused = false;
+    }
+
     void FixedUpdate()
     {
 
@@ -44,10 +50,8 @@ public class PlayerControls : MonoBehaviour
             ControlPlayer(inputList);
 
         }
-
-
-
     }
+
     void Update()
     {
         if (Input.GetButtonDown("Pause"))
@@ -62,12 +66,6 @@ public class PlayerControls : MonoBehaviour
         {   
                // paused = togglePause();
         }
-    }
-
-    void Start()
-    {
-        IsInputEnabled = true;
-        paused = false;
     }
 
     void ControlPlayer(bool[] Inputlist)
