@@ -10,6 +10,7 @@ public class PlayerControls : MonoBehaviour
     public static bool IsInputEnabled;
     public GameObject Pushing;
     public string PushFacing;
+    public static bool InReachOfNpc = false;
 
     public bool IsPushing = false; // czy cos pcha
     public bool Holding = false; // Czy coś trzyma
@@ -125,9 +126,10 @@ public class PlayerControls : MonoBehaviour
         {
             Pickup(HeldItem);
         }
-        if (Holding && Inputlist[4] && x == 0 && y == 0)
+        if (Holding && Inputlist[4] && x == 0 && y == 0 && InReachOfNpc == false)
         {
             Throw(HeldItem);
+            
         }
         Collided = false;
     }

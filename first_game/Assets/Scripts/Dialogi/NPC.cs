@@ -21,16 +21,23 @@ public class NPC : MonoBehaviour
 
     void Update()
     {
+        if (Vector3.Distance(transform.position, Player.transform.position) <= 4f)
+        {
+            PlayerControls.InReachOfNpc = true;
+        }                                           // sprawdzanie czy gracz jest wystarczajaco blisko by pogadac z npc
+        else
+        {
+            PlayerControls.InReachOfNpc = false;
+        }
+
         if (Time.timeScale == 1f)
         {
             if (talking == true && Input.GetButtonDown("Talk"))
             {
                 talking = FindObjectOfType<DialogueManager>().DisplayNextSentence();
-
             }
             else if (Input.GetButtonDown("Talk") && Vector3.Distance(transform.position, Player.transform.position) < 4f)
             {
-
                 TriggerDialogue();
                 talking = true;
             }
