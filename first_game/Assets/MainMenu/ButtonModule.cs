@@ -22,12 +22,12 @@ public class ButtonModule : MonoBehaviour
             if (firstbutton==numberofbuttons-1)
             {
                 firstbutton = 0;
-                EventSystem.current.SetSelectedGameObject(this.gameObject.transform.GetChild(firstbutton).gameObject);
+                NextButton(firstbutton);
             }
             else
             {
                 firstbutton += 1;
-                EventSystem.current.SetSelectedGameObject(this.gameObject.transform.GetChild(firstbutton).gameObject);
+                NextButton(firstbutton);
             }
         }
         if (Input.GetButtonDown("Up"))
@@ -35,12 +35,12 @@ public class ButtonModule : MonoBehaviour
             if (firstbutton==0)
             {
                 firstbutton = numberofbuttons-1;
-                EventSystem.current.SetSelectedGameObject(this.gameObject.transform.GetChild(firstbutton).gameObject);
+                NextButton(firstbutton);
             }
             else
             {
                 firstbutton -= 1;
-                EventSystem.current.SetSelectedGameObject(this.gameObject.transform.GetChild(firstbutton).gameObject);
+                NextButton(firstbutton);
             }
             
         }
@@ -50,6 +50,15 @@ public class ButtonModule : MonoBehaviour
             {
                 UnityEngine.SceneManagement.SceneManager.LoadScene(1);
             }
+            if (firstbutton == 2) 
+            {
+                Application.Quit();
+            }
         }
+    }
+
+    void NextButton(int x)
+    {
+        EventSystem.current.SetSelectedGameObject(this.gameObject.transform.GetChild(x).gameObject);
     }
 }
