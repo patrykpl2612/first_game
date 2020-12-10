@@ -21,17 +21,19 @@ public class NPC : MonoBehaviour
 
     void Update()
     {
-        
-        if (talking == true && Input.GetButtonDown("Talk"))
+        if (Time.timeScale == 1f)
         {
-            talking = FindObjectOfType<DialogueManager>().DisplayNextSentence();
-            
-        }
-        else if (Input.GetButtonDown("Talk") && Vector3.Distance(transform.position, Player.transform.position) < 4f)
-        {
-            
-            TriggerDialogue();
-            talking = true;
+            if (talking == true && Input.GetButtonDown("Talk"))
+            {
+                talking = FindObjectOfType<DialogueManager>().DisplayNextSentence();
+
+            }
+            else if (Input.GetButtonDown("Talk") && Vector3.Distance(transform.position, Player.transform.position) < 4f)
+            {
+
+                TriggerDialogue();
+                talking = true;
+            }
         }
     }
 

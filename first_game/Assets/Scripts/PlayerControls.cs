@@ -21,9 +21,12 @@ public class PlayerControls : MonoBehaviour
     public int default_animation_speed = 2;
     public float default_player_speed = 0.1f;
 
+    private bool paused;
+
     void FixedUpdate()
     {
-        if (IsInputEnabled)
+
+        if (IsInputEnabled && paused==false)
         {
             bool up = Input.GetButton("Up");
             bool down = Input.GetButton("Down");
@@ -33,25 +36,37 @@ public class PlayerControls : MonoBehaviour
             bool putDown = Input.GetButton("PutDown");
 
             bool[] inputList = { up, down, left, right, putDown, space };
-            string[] inputNames = { "Up", "Down", "Left", "Right" }; //lis booli do przeslania do animatora
+            string[] inputNames = { "Up", "Down", "Left", "Right" }; //lista booli do przeslania do animatora
             SendBoolInput(inputList, inputNames);
 
 
             ControlPlayer(inputList);
-            
-            
+
         }
-        
-        
 
 
 
+    }
+    void Update()
+    {
+        if (Input.GetButtonDown("Pause"))
+        {
+            paused = togglePause();
+        }
+    }
 
+    void OnGUI() //GUI przy paused game
+    {
+        if (paused)
+        {   
+               // paused = togglePause();
+        }
     }
 
     void Start()
     {
         IsInputEnabled = true;
+        paused = false;
     }
 
     void ControlPlayer(bool[] Inputlist)
@@ -92,7 +107,7 @@ public class PlayerControls : MonoBehaviour
             animator.speed = default_animation_speed;
         }
 
-        if (IsPushing && FacingIsPush(Inputlist[0], Inputlist[1], Inputlist[2], Inputlist[3],PushFacing) )
+        if (IsPushing && FacingIsPush(Inputlist[0], Inputlist[1], Inputlist[2], Inputlist[3], PushFacing))
         {
             Pushing.GetComponent<PushAble>().Push(PushFacing);
         }
@@ -136,7 +151,7 @@ public class PlayerControls : MonoBehaviour
 
 
     }
-  
+
     void OnCollisionExit2D(Collision2D Object)
     {
         GameObject CollidedObject = GameObject.Find(Object.collider.name);
@@ -146,13 +161,13 @@ public class PlayerControls : MonoBehaviour
             Pushing = null;
         }
     }
-          
+
     void Pickup(GameObject Object)
-    {       
-        Object.transform.SetParent(transform, true);              
+    {
+        Object.transform.SetParent(transform, true);
         Object.transform.Translate((transform.position) - Object.transform.position);
         Object.transform.Translate(0f, Object.GetComponent<PickupAble>().Get("Height"), 0f);
-        
+
         Collider2D m_Collider = Object.GetComponent<Collider2D>();
         SpriteRenderer m_Renderer = Object.GetComponent<SpriteRenderer>();
 
@@ -181,8 +196,8 @@ public class PlayerControls : MonoBehaviour
 
         if (Facing == "W")
         {
-            Object.transform.Translate(rangeH * -1f, 0f -head, 0f);  //rzut w lewo
-        }   
+            Object.transform.Translate(rangeH * -1f, 0f - head, 0f);  //rzut w lewo
+        }
         if (Facing == "E")
         {
             Object.transform.Translate(rangeH, 0f - head, 0f);   //rzut w prawo
@@ -195,7 +210,7 @@ public class PlayerControls : MonoBehaviour
         {
             Object.transform.Translate(0f, (rangeV * -1f) - head, 0f); //rzut w dół
         }
-      
+
         Object.transform.SetParent(null);
     }
 
@@ -207,11 +222,11 @@ public class PlayerControls : MonoBehaviour
             animator.SetBool(inputName, inputList[i]);  //wysyła stan wartosci do animatora unity (mapowanie kontrolek,animacji)
             i += 1;
         }
-    }    
-    
-    bool FacingIsPush(bool up, bool down, bool left, bool right,string Facing) //zwraca true jesli tylko jeden z 4 jest true
+    }
+
+    bool FacingIsPush(bool up, bool down, bool left, bool right, string Facing) //zwraca true jesli tylko jeden z 4 jest true
     {
-        if (Facing == "N" && up && left == false && right == false )
+        if (Facing == "N" && up && left == false && right == false)
         {
             return true;
         }
@@ -220,12 +235,12 @@ public class PlayerControls : MonoBehaviour
         {
             return true;
         }
-        
+
         if (Facing == "S" && down && left == false && right == false)
         {
             return true;
         }
-        
+
         if (Facing == "W" && left && up == false && down == false)
         {
             return true;
@@ -237,5 +252,20 @@ public class PlayerControls : MonoBehaviour
 
     }
 
+    bool togglePause()
+    {
+        if (Time.timeScale == 0f)
+        {
+            Time.timeScale = 1f;
+            Debug.Log("Unpaused");
+            return (false);
+        }
+        else
+        {
+            Time.timeScale = 0f;
+            Debug.Log("Paused");
+            return (true);
+        }
+    }
 }
 
