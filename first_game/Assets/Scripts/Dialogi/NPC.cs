@@ -70,15 +70,11 @@ public class NPC : MonoBehaviour
                     if (Location.x > 1)
                     {
                         x = 0.1f;
-
-                        
                     }
                     
                     if (Location.x < -1)
                     {
                         x = -0.1f;
-
-                       
                     }
 
                     if (Location.y > 1)
