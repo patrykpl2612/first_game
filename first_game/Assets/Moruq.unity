@@ -1539,6 +1539,9 @@ MonoBehaviour:
     - ' '
   Player: {fileID: 0}
   audioSource: {fileID: 556843604}
+  Follower: 0
+  FollowingDistance: 3
+  Fastness: 2
 --- !u!212 &556843598
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2141,7 +2144,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4884f3c993ac92145b9a076b909d7f38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstbutton: 0
 --- !u!114 &1401773841
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2468,6 +2470,9 @@ MonoBehaviour:
     - 
   Player: {fileID: 0}
   audioSource: {fileID: 1527692186}
+  Follower: 1
+  FollowingDistance: 3
+  Fastness: 2
 --- !u!212 &1527692184
 SpriteRenderer:
   m_ObjectHideFlags: 0
