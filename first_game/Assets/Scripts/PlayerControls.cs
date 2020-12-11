@@ -160,6 +160,19 @@ public class PlayerControls : MonoBehaviour
         Object.transform.Translate((transform.position) - Object.transform.position);
         Object.transform.Translate(0f, Object.GetComponent<PickupAble>().Get("Height"), 0f);
 
+        if (Facing == "W")
+        {
+            Vector3 newScale = Object.transform.localScale;
+            if (newScale.x > 0) newScale.x *= -1;
+            Object.transform.localScale = newScale;
+        }
+        else if (Facing == "E")
+        {
+            Vector3 newScale = Object.transform.localScale;
+            if (newScale.x < 0) newScale.x *= -1;
+            Object.transform.localScale = newScale;
+        }
+
         Collider2D m_Collider = Object.GetComponent<Collider2D>();
         SpriteRenderer m_Renderer = Object.GetComponent<SpriteRenderer>();
 
