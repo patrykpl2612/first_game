@@ -6,9 +6,15 @@ public class FPS_LIMITER : MonoBehaviour
 {
     public int FPS_LIMIT = 30;
     
-    void Awake()
+    void Start()
     {
-        Application.targetFrameRate = FPS_LIMIT;  
+        QualitySettings.vSyncCount = 0;
     }
-
+    void Update()
+    {
+        if (FPS_LIMIT != Application.targetFrameRate)
+        {
+            Application.targetFrameRate = FPS_LIMIT;
+        }
+    }
 }
