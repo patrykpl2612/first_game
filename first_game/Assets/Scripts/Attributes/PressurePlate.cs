@@ -7,6 +7,7 @@ public class PressurePlate : MonoBehaviour
     private Collider2D m_ObjectCollider;
     public bool Pressed;                            // jesli chcemy zeby jakis obiekt dzialal na plytko to trzeba mu dac rigidbody2D
     public Animator PressurePlateAnimator;
+    public AudioSource audiosource;
 
 
     void Start()
@@ -22,11 +23,13 @@ public class PressurePlate : MonoBehaviour
     void OnTriggerEnter2D(Collider2D col)
     {
         Pressed = true;
+        audiosource.Play();
         Debug.Log("PRESSED!");
     }
     void OnTriggerExit2D(Collider2D col)
     {
         Pressed = false;
+        audiosource.Play();
         Debug.Log("RELESED!");
     }
 }
