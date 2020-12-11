@@ -22,7 +22,7 @@ public class PlayerControls : MonoBehaviour
     public float default_player_speed = 0.1f;
 
     private bool paused;
-    private Rect background= new Rect(0, 0, Screen.width, Screen.height);
+    private GUILayoutOption[] MenuButtons;
 
     void Start()
     {
@@ -62,14 +62,21 @@ public class PlayerControls : MonoBehaviour
 
     void OnGUI() //GUI przy paused game
     {
+       // MenuButtons = new GUILayoutOption[GUILayout.Width(300), GUILayout.Height(300)];
 
         if (paused)
         {
-            GUILayout.BeginArea(background);
-                 GUILayout.BeginArea(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 50, 100, 100));
-                      GUILayout.Button("Click me");
-
-                 GUILayout.EndArea();
+            GUILayout.BeginArea(new Rect(0, 0, Screen.width, Screen.height));
+            
+                 GUI.BeginGroup(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 50, 300, 300));
+            GUI.color = Color.yellow;
+            GUILayout.Button( "RESUME", GUILayout.Width(200), GUILayout.Height(20));
+            GUILayout.Button("SETTINGS", GUILayout.Width(200), GUILayout.Height(20));
+            GUILayout.Button("BACK TO MENU", GUILayout.Width(200), GUILayout.Height(20));
+            // GUILayout.Button("SETTINGS");
+            //GUILayout.Button("BACK TO MENU");
+            GUI.EndGroup();
+           
             GUILayout.EndArea();
         }
     }
