@@ -1043,6 +1043,10 @@ MonoBehaviour:
     - ' '
   Player: {fileID: 0}
   audioSource: {fileID: 556843604}
+  Follower: 0
+  Following: 0
+  FollowingDistance: 1
+  Fastness: 2
 --- !u!212 &556843598
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1820,10 +1824,14 @@ MonoBehaviour:
     sentences:
     - TY CORVOO
     - Japierdole
-    - ELuwina szmato!
+    - "Tera bede za toba \u0142azi\u0142"
     - 
   Player: {fileID: 0}
   audioSource: {fileID: 1527692186}
+  Follower: 1
+  Following: 0
+  FollowingDistance: 3
+  Fastness: 2
 --- !u!212 &1527692184
 SpriteRenderer:
   m_ObjectHideFlags: 0

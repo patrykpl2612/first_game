@@ -10,13 +10,21 @@ public class NPC : MonoBehaviour
     public GameObject Player;
     public AudioSource audioSource;
     private bool talking;
+    private Vector3 LastPlayerPos;
+    private Vector3 NewPlayerPos;
+    private bool GoingToLocation = false;
+    private Vector3 Location;
 
-
+    public bool Follower = false; // 
+    private bool Following = false;
+    public float FollowingDistance = 3f;
+    public int Fastness = 2;
 
     void Start()
     {
         Player = GameObject.Find("/Player");
         talking = false;
+        LastPlayerPos = Player.transform.position;
     }
 
     void Update()
@@ -35,6 +43,11 @@ public class NPC : MonoBehaviour
             if (talking == true && Input.GetButtonDown("Talk"))
             {
                 talking = FindObjectOfType<DialogueManager>().DisplayNextSentence();
+                if (talking == false && Follower)
+                {
+                    LastPlayerPos = Player.transform.position;
+                    Following = !Following;
+                }
             }
             else if (Input.GetButtonDown("Talk") && Vector3.Distance(transform.position, Player.transform.position) < 4f)
             {
@@ -42,6 +55,60 @@ public class NPC : MonoBehaviour
                 talking = true;
             }
         }
+
+
+        if (Following)
+        {
+            NewPlayerPos = Player.transform.position;
+            if (Vector3.Distance(NewPlayerPos, LastPlayerPos) >= 4f)
+            {
+                Location = LastPlayerPos - transform.position;
+                GoingToLocation = true;              
+                LastPlayerPos = NewPlayerPos;
+            }
+
+            if (GoingToLocation)
+            {
+                if (Vector3.Distance(Location, transform.position) >= FollowingDistance)
+                {
+                    float x = 0;
+                    float y = 0;
+                    if (Location.x > 1)
+                    {
+                        x = 0.1f;
+                    }
+                    
+                    if (Location.x < -1)
+                    {
+                        x = -0.1f;
+                    }
+
+                    if (Location.y > 1)
+                    {
+                        y = 0.1f;
+                    }
+
+                    if (Location.y < -1)
+                    {
+                        y = -0.1f;
+                    }
+
+                    x *= Fastness;
+                    y *= Fastness;
+
+                    Location = LastPlayerPos - transform.position;
+
+                    transform.Translate(x,y,0f);
+                }
+                else
+                {
+                    GoingToLocation = false;
+                }
+            }
+        }
+
+        
+
     }
 
     public void TriggerDialogue()
