@@ -8,15 +8,20 @@ using UnityEngine.SceneManagement;
 public class ButtonModule : MonoBehaviour
 {
     private int numberofbuttons;
-    public int firstbutton=0;
+    private int firstbutton=-1;
 
     void Start()
     {
         numberofbuttons = this.gameObject.transform.childCount;
-        EventSystem.current.SetSelectedGameObject(this.gameObject.transform.GetChild(firstbutton).gameObject);
     }
     void Update()
     {
+        if (firstbutton == -1)
+        {
+            NextButton(0);
+            firstbutton = 0;
+        }
+
         if (Input.GetButtonDown("Down"))
         {
             if (firstbutton==numberofbuttons-1)
@@ -30,6 +35,7 @@ public class ButtonModule : MonoBehaviour
                 NextButton(firstbutton);
             }
         }
+
         if (Input.GetButtonDown("Up"))
         {
             if (firstbutton==0)

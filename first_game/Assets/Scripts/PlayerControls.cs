@@ -21,18 +21,15 @@ public class PlayerControls : MonoBehaviour
     public int default_animation_speed = 2;
     public float default_player_speed = 0.1f;
 
-    private bool paused;
-
     void Start()
     {
         IsInputEnabled = true;
-        paused = false;
     }
 
     void FixedUpdate()
     {
 
-        if (IsInputEnabled && paused==false)
+        if (IsInputEnabled && this.GetComponent<PlayerMenu>().IsShowed() == false)
         {
             bool up = Input.GetButton("Up");
             bool down = Input.GetButton("Down");
@@ -48,14 +45,6 @@ public class PlayerControls : MonoBehaviour
 
             ControlPlayer(inputList);
 
-        }
-    }
-
-    void Update()
-    {
-        if (Input.GetButtonDown("Pause"))
-        {
-            paused = togglePause();
         }
     }
 
@@ -103,12 +92,12 @@ public class PlayerControls : MonoBehaviour
         }
 
 
-       
+
         Vector3 movement = new Vector3(50 * x * fastness, 50 * y * fastness, 0);
 
         movement *= Time.fixedDeltaTime;
         transform.Translate(movement);
-        
+
 
         if (Holding)
         {
@@ -117,16 +106,16 @@ public class PlayerControls : MonoBehaviour
         if (Holding && Inputlist[4] && x == 0 && y == 0 && InReachOfNpc == false)
         {
             Throw(HeldItem);
-            
+
         }
 
     }
 
     void OnCollisionEnter2D(Collision2D Object)
     {
-        GameObject CollidedObject = GameObject.Find(Object.collider.name);        
-       // bool IsPressurePlate = CollidedObject.GetComponent<PressurePlate>() != null;
-        
+        GameObject CollidedObject = GameObject.Find(Object.collider.name);
+        // bool IsPressurePlate = CollidedObject.GetComponent<PressurePlate>() != null;
+
 
         /*if (IsPressurePlate)
         {
@@ -134,8 +123,8 @@ public class PlayerControls : MonoBehaviour
             PressurePlate.enabled = false;
         } */
 
-        
-        if (CollidedObject.GetComponent<PickupAble>() != null && Holding == false ) // sprawdz czy obiekt mozna podniesc
+
+        if (CollidedObject.GetComponent<PickupAble>() != null && Holding == false) // sprawdz czy obiekt mozna podniesc
         {
             Holding = true;
             HeldItem = CollidedObject;
@@ -162,7 +151,7 @@ public class PlayerControls : MonoBehaviour
             IsPushing = false;
             Pushing = null;
         }
-        
+
     }
 
     void Pickup(GameObject Object)
@@ -174,7 +163,7 @@ public class PlayerControls : MonoBehaviour
         Collider2D m_Collider = Object.GetComponent<Collider2D>();
         SpriteRenderer m_Renderer = Object.GetComponent<SpriteRenderer>();
 
-        
+
         if (m_Collider.enabled)
         {
             m_Collider.enabled = false;
@@ -255,20 +244,5 @@ public class PlayerControls : MonoBehaviour
 
     }
 
-    bool togglePause()
-    {
-        if (Time.timeScale == 0f)
-        {
-            Time.timeScale = 1f;
-            Debug.Log("Unpaused");
-            return (false);
-        }
-        else
-        {
-            Time.timeScale = 0f;
-            Debug.Log("Paused");
-            return (true);
-        }
-    }
 }
 
