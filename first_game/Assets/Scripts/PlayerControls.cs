@@ -114,15 +114,6 @@ public class PlayerControls : MonoBehaviour
     void OnCollisionEnter2D(Collision2D Object)
     {
         GameObject CollidedObject = GameObject.Find(Object.collider.name);
-        // bool IsPressurePlate = CollidedObject.GetComponent<PressurePlate>() != null;
-
-
-        /*if (IsPressurePlate)
-        {
-            Collider2D PressurePlate = CollidedObject.GetComponent<Collider2D>();
-            PressurePlate.enabled = false;
-        } */
-
 
         if (CollidedObject.GetComponent<PickupAble>() != null && Holding == false) // sprawdz czy obiekt mozna podniesc
         {
