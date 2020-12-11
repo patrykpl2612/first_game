@@ -47,6 +47,7 @@ public class NPC : MonoBehaviour
                 {
                     LastPlayerPos = Player.transform.position;
                     Following = !Following;
+                    GoingToLocation = false;
                 }
             }
             else if (Input.GetButtonDown("Talk") && Vector3.Distance(transform.position, Player.transform.position) < 4f)
@@ -76,8 +77,7 @@ public class NPC : MonoBehaviour
                     if (Location.x > 1)
                     {
                         x = 0.1f;
-                    }
-                    
+                    }                  
                     if (Location.x < -1)
                     {
                         x = -0.1f;
@@ -87,7 +87,6 @@ public class NPC : MonoBehaviour
                     {
                         y = 0.1f;
                     }
-
                     if (Location.y < -1)
                     {
                         y = -0.1f;
