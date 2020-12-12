@@ -2586,12 +2586,12 @@ MonoBehaviour:
     sentences:
     - TY CORVOO
     - Japierdole
-    - ELuwina szmato!
+    - bede teraz za toba chodzic
     - 
   Player: {fileID: 0}
   audioSource: {fileID: 1527692186}
   Follower: 1
-  FollowingDistance: 1
+  FollowingDistance: 4
   Fastness: 2
 --- !u!212 &1527692184
 SpriteRenderer:

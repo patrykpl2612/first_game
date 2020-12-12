@@ -59,12 +59,18 @@ public class NPC : MonoBehaviour
 
         if (Following)
         {
-            
+            if (Vector3.Distance(NewPlayerPos, LastPlayerPos) >= 4f)
+            {
+                Location = LastPlayerPos - transform.position;
+                GoingToLocation = true;
+                LastPlayerPos = NewPlayerPos;
+            }
+
             NewPlayerPos = Player.transform.position;
             
             if (GoingToLocation)
             {
-                Debug.Log("x");
+
                 if (Vector3.Distance(Location, transform.position) >= FollowingDistance)
                 {
                     float x = 0;
