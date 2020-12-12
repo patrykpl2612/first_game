@@ -8,20 +8,31 @@ using UnityEngine.SceneManagement;
 public class ButtonModule : MonoBehaviour
 {
     private int numberofbuttons;
-    private int firstbutton=-1;
+    private int firstbutton;
+    private Scene scene;
+    private GameObject Player;
 
     void Start()
     {
         numberofbuttons = this.gameObject.transform.childCount;
+        scene = SceneManager.GetActiveScene();
+        Player = GameObject.Find("/Player");
+        firstbutton = 0;
+    }
+
+    void FixedUpdate()
+    {
+        if (firstbutton == 0)
+        {
+            NextButton(0);
+        }
     }
     void Update()
     {
-        if (firstbutton == -1)
+        if (firstbutton == 0)
         {
             NextButton(0);
-            firstbutton = 0;
         }
-
         if (Input.GetButtonDown("Down"))
         {
             if (firstbutton==numberofbuttons-1)
@@ -54,11 +65,28 @@ public class ButtonModule : MonoBehaviour
         {
             if (firstbutton==0)
             {
-                UnityEngine.SceneManagement.SceneManager.LoadScene(1);
+                if (UnityEngine.SceneManagement.SceneManager.GetSceneByBuildIndex(0) == scene)
+                {
+                    UnityEngine.SceneManagement.SceneManager.LoadScene(1);
+                }
+                else
+                {
+                    firstbutton = 0;
+                    Player.GetComponent<PlayerMenu>().ShowMenu();
+                }
             }
             if (firstbutton == 2) 
             {
-                Application.Quit();
+               
+                if (UnityEngine.SceneManagement.SceneManager.GetSceneByBuildIndex(0) == scene)
+                {
+                    Application.Quit();
+                }
+                else
+                {
+                    Player.GetComponent<PlayerMenu>().togglePause();
+                    UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+                }
             }
         }
     }

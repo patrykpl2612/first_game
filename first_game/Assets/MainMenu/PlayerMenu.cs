@@ -4,45 +4,46 @@ using System.Collections;
 public class PlayerMenu : MonoBehaviour
 {
 
-    public GameObject menu; // Assign in inspector
+    public GameObject menu;
     private bool isShowing;
 
-    public bool paused;
+    
 
     void Start()
     {
         menu.SetActive(false);
-        paused = false;
+        
     }
 
     void Update()
     {
         if (Input.GetButtonDown("Pause"))
         {
-            paused = togglePause();
-            isShowing = !isShowing;
-            menu.SetActive(isShowing);
+            ShowMenu();
         }
     }
     
-     bool togglePause()
+    public void togglePause()//nie wiem czy dziala co to Time.timeScale?
     {
          if (Time.timeScale == 0f)
          {
              Time.timeScale = 1f;
-             Debug.Log("Unpaused");
-             return (false);
          }
          else
          {
-             Time.timeScale = 0f;
-             Debug.Log("Paused");
-             return (true);
+             Time.timeScale = 0f; 
          }
     }
     
-    public bool IsShowed()
+    public bool IsShowed()// zwraca czy gra jest zatrzymana(okienko menu jest wlaczone)
     {
         return isShowing;
+    }
+
+    public void ShowMenu()//wlacza/wylacza okienko menu
+    {
+        isShowing = !isShowing;
+        menu.SetActive(isShowing);
+        togglePause();
     }
 }
