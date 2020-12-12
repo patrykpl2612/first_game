@@ -33,7 +33,7 @@ public class ButtonModule : MonoBehaviour
         {
             NextButton(0);
         }
-        if (Input.GetButtonDown("Down"))
+        if (Input.GetButtonDown("Right") || Input.GetButtonDown("Down"))
         {
             if (firstbutton==numberofbuttons-1)
             {
@@ -47,7 +47,7 @@ public class ButtonModule : MonoBehaviour
             }
         }
 
-        if (Input.GetButtonDown("Up"))
+        if (Input.GetButtonDown("Left") || Input.GetButtonDown("Up"))
         {
             if (firstbutton==0)
             {

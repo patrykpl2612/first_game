@@ -1538,7 +1538,7 @@ MonoBehaviour:
     - ' '
   Player: {fileID: 0}
   audioSource: {fileID: 556843604}
-  Follower: 1
+  Follower: 0
   FollowingDistance: 3
   Fastness: 2
 --- !u!212 &556843598
@@ -2590,8 +2590,8 @@ MonoBehaviour:
     - 
   Player: {fileID: 0}
   audioSource: {fileID: 1527692186}
-  Follower: 0
-  FollowingDistance: 3
+  Follower: 1
+  FollowingDistance: 1
   Fastness: 2
 --- !u!212 &1527692184
 SpriteRenderer:

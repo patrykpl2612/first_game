@@ -29,10 +29,10 @@ public class NPC : MonoBehaviour
 
     void Update()
     {
-        if (Vector3.Distance(transform.position, Player.transform.position) <= 4f)
+        if (Vector3.Distance(transform.position, Player.transform.position) <= 4f)// sprawdzanie czy gracz jest wystarczajaco blisko by pogadac z npc
         {
             PlayerControls.InReachOfNpc = true;
-        }                                           // sprawdzanie czy gracz jest wystarczajaco blisko by pogadac z npc
+        }                                           
         else
         {
             PlayerControls.InReachOfNpc = false;
@@ -55,14 +55,16 @@ public class NPC : MonoBehaviour
                 talking = true;
             }
         }
-
+        
 
         if (Following)
         {
+            
             NewPlayerPos = Player.transform.position;
-
+            
             if (GoingToLocation)
             {
+                Debug.Log("x");
                 if (Vector3.Distance(Location, transform.position) >= FollowingDistance)
                 {
                     float x = 0;
@@ -113,7 +115,7 @@ public class NPC : MonoBehaviour
     {
         audioSource.Play();
     }
-}//https://www.youtube.com/watch?v=_nRzoTzeyxU&feature=emb_title
+}
    
    
 
