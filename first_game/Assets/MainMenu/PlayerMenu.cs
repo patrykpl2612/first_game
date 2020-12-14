@@ -7,12 +7,11 @@ public class PlayerMenu : MonoBehaviour
     public GameObject menu;
     private bool isShowing;
 
-    
 
     void Start()
     {
         menu.SetActive(false);
-        
+        isShowing = false;
     }
 
     void Update()

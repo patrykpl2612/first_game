@@ -11,6 +11,7 @@ public class ButtonModule : MonoBehaviour
     private int firstbutton;
     private Scene scene;
     private GameObject Player;
+    
 
     void Start()
     {
@@ -18,21 +19,18 @@ public class ButtonModule : MonoBehaviour
         scene = SceneManager.GetActiveScene();
         Player = GameObject.Find("/Player");
         firstbutton = 0;
+        EscapePressed();
     }
-
-    void FixedUpdate()
+    
+    void OnEnable()
     {
-        if (firstbutton == 0)
-        {
-            NextButton(0);
-        }
+        EscapePressed();
+       
     }
+    
     void Update()
     {
-        if (firstbutton == 0)
-        {
-            NextButton(0);
-        }
+
         if (Input.GetButtonDown("Right") || Input.GetButtonDown("Down"))
         {
             if (firstbutton==numberofbuttons-1)
@@ -42,8 +40,7 @@ public class ButtonModule : MonoBehaviour
             }
             else
             {
-                firstbutton += 1;
-                NextButton(firstbutton);
+                NextButton(++firstbutton);
             }
         }
 
@@ -56,12 +53,11 @@ public class ButtonModule : MonoBehaviour
             }
             else
             {
-                firstbutton -= 1;
-                NextButton(firstbutton);
+                NextButton(--firstbutton);
             }
             
         }
-        if (Input.GetButton("Talk"))
+        if (Input.GetButtonDown("Talk"))
         {
             if (firstbutton==0)
             {
@@ -71,7 +67,6 @@ public class ButtonModule : MonoBehaviour
                 }
                 else
                 {
-                    firstbutton = 0;
                     Player.GetComponent<PlayerMenu>().ShowMenu();
                 }
             }
@@ -86,13 +81,20 @@ public class ButtonModule : MonoBehaviour
                 {
                     Player.GetComponent<PlayerMenu>().togglePause();
                     UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+                    
                 }
             }
         }
     }
 
-    void NextButton(int x)
+    public void NextButton(int x)
     {
         EventSystem.current.SetSelectedGameObject(this.gameObject.transform.GetChild(x).gameObject);
+    }
+    public void EscapePressed()
+    {
+        EventSystem.current.SetSelectedGameObject(null);
+        firstbutton = 0;
+        NextButton(0);
     }
 }
