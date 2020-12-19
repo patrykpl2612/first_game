@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PressurePlate : MonoBehaviour
 {
+    private int ObjectsOnPlate = 0;
     private Collider2D m_ObjectCollider;
     public bool Pressed;                            // jesli chcemy zeby jakis obiekt dzialal na plytko to trzeba mu dac rigidbody2D
     public Animator PressurePlateAnimator;
@@ -17,20 +18,27 @@ public class PressurePlate : MonoBehaviour
 
     void Update()
     {
-        PressurePlateAnimator.SetBool("Pressed",Pressed);
+        PressurePlateAnimator.SetBool("Pressed",Pressed);           
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        Pressed = true;
-        audiosource.Play();
-        Debug.Log("PRESSED!");
+
+        ObjectsOnPlate += 1;
+        if (ObjectsOnPlate == 1)
+        {
+            Pressed = true;
+            audiosource.Play();
+        }
     }
     void OnTriggerExit2D(Collider2D col)
     {
-        Pressed = false;
-        audiosource.Play();
-        Debug.Log("RELESED!");
+        ObjectsOnPlate -= 1;
+        if (ObjectsOnPlate == 0)
+        {
+            Pressed = false;
+            audiosource.Play();
+        }
     }
 }
 
