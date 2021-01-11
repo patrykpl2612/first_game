@@ -26,6 +26,10 @@ public class PlayerControls : MonoBehaviour
     private Inventory inventory;
     public Item test;
 
+    public float flashTime;
+    Color origionalColor;
+    public SpriteRenderer renderer;
+
     private void Awake()
     {
         inventory = new Inventory(UseItem);
@@ -46,6 +50,7 @@ public class PlayerControls : MonoBehaviour
         if (Input.GetButtonDown("Use") && test.amount > 0)
         {
             inventory.UseItem(test);
+            inventory.RemoveItem(test);
         }
     }
 
@@ -54,11 +59,22 @@ public class PlayerControls : MonoBehaviour
         switch (item.itemType)
         {
             case Item.ItemType.HealthPotion:
-                //FlashGreen();
-                inventory.RemoveItem(new Item { itemType = Item.ItemType.HealthPotion, amount = 1 });
+                Flash();
+                //inventory.RemoveItem(new Item { itemType = Item.ItemType.HealthPotion, amount = 1 });
                 break;
 
         }
+    }
+
+    private void Flash()
+    {
+        renderer.material.color = Color.red;
+        Invoke("ResetColor", flashTime);
+    }
+
+    private void ResetColor()
+    {
+        renderer.material.color = origionalColor;
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
@@ -75,6 +91,7 @@ public class PlayerControls : MonoBehaviour
     void Start()
     {
         IsInputEnabled = true;
+        origionalColor = renderer.material.color;
     }
 
     void FixedUpdate()

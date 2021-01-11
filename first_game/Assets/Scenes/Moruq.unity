@@ -1499,8 +1499,10 @@ MonoBehaviour:
   default_animation_speed: 2
   default_player_speed: 0.1
   test:
-    itemType: 3
+    itemType: 5
     amount: 1
+  flashTime: 0.05
+  renderer: {fileID: 500158269}
 --- !u!50 &500158267
 Rigidbody2D:
   serializedVersion: 4
