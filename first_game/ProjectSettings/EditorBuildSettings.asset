@@ -6,9 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/MainMenu.unity
+    path: Assets/Scenes/MainMenu.unity
     guid: 39ebeb6e34be0324eb7757358437ede0
   - enabled: 1
-    path: Assets/Moruq.unity
+    path: Assets/Scenes/Moruq.unity
     guid: 1892697058338dc4b922627305c4141d
   m_configObjects: {}

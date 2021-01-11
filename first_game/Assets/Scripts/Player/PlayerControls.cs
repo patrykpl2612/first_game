@@ -58,11 +58,6 @@ public class PlayerControls : MonoBehaviour
                 inventory.RemoveItem(new Item { itemType = Item.ItemType.HealthPotion, amount = 1 });
                 break;
 
-            case Item.ItemType.ManaPotion:
-                //FlashBlue();
-                inventory.RemoveItem(new Item { itemType = Item.ItemType.ManaPotion, amount = 1 });
-                break;
-
         }
     }
 
