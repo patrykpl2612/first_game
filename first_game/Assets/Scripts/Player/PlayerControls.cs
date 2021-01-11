@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerControls : MonoBehaviour
 {
+    [SerializeField] private UI_Inventory uiInventory;
+
     public Sprite[] spriteArray;
     public SpriteRenderer spriteRenderer;
     public Animator animator;
@@ -20,6 +22,60 @@ public class PlayerControls : MonoBehaviour
 
     public int default_animation_speed = 2;
     public float default_player_speed = 0.1f;
+
+    private Inventory inventory;
+    public Item test;
+
+    private void Awake()
+    {
+        inventory = new Inventory(UseItem);
+        uiInventory.SetPlayer(this);
+        uiInventory.SetInventory(inventory);
+
+    }
+
+    private void Update()
+    {
+        if (Input.GetButtonDown("Drop") && test.amount > 0) // dla Input.GetButton("Drop") && test.amount > 0 SRA PIENIEDZMI JAK POYEBANYYYY
+        {
+            Item duplicateItem = new Item { itemType = test.itemType, amount = test.amount };
+            inventory.RemoveItem(test);
+            ItemWorld.DropItem(this.transform.position, Facing, duplicateItem);
+        }
+
+        if (Input.GetButtonDown("Use") && test.amount > 0)
+        {
+            inventory.UseItem(test);
+        }
+    }
+
+    private void UseItem(Item item)
+    {
+        switch (item.itemType)
+        {
+            case Item.ItemType.HealthPotion:
+                //FlashGreen();
+                inventory.RemoveItem(new Item { itemType = Item.ItemType.HealthPotion, amount = 1 });
+                break;
+
+            case Item.ItemType.ManaPotion:
+                //FlashBlue();
+                inventory.RemoveItem(new Item { itemType = Item.ItemType.ManaPotion, amount = 1 });
+                break;
+
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        ItemWorld itemWorld = collider.GetComponent<ItemWorld>();
+        if (itemWorld != null)
+        {
+            // Touching Item
+            inventory.AddItem(itemWorld.GetItem());
+            itemWorld.DestroySelf();
+        }
+    }
 
     void Start()
     {
