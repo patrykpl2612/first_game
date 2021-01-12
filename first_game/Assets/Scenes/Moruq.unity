@@ -1498,6 +1498,7 @@ MonoBehaviour:
   Facing: S
   default_animation_speed: 2
   default_player_speed: 0.1
+  inventoryObject: {fileID: 126701883}
   test:
     itemType: 5
     amount: 1

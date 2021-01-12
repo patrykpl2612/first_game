@@ -24,6 +24,7 @@ public class PlayerControls : MonoBehaviour
     public float default_player_speed = 0.1f;
 
     private Inventory inventory;
+    public GameObject inventoryObject;
     public Item test;
 
     public float flashTime;
@@ -40,6 +41,12 @@ public class PlayerControls : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetButtonDown("Equipment"))
+        {
+            if (inventoryObject.activeSelf == true) inventoryObject.SetActive(false);
+            else inventoryObject.SetActive(true);
+        }
+
         if (Input.GetButtonDown("Drop") && test.amount > 0) // dla Input.GetButton("Drop") && test.amount > 0 SRA PIENIEDZMI JAK POYEBANYYYY
         {
             Item duplicateItem = new Item { itemType = test.itemType, amount = test.amount };
