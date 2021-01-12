@@ -25,7 +25,7 @@ public class PlayerControls : MonoBehaviour
 
     private Inventory inventory;
     public GameObject inventoryObject;
-    public Item test;
+    public Item activeItem;
 
     public float flashTime;
     Color origionalColor;
@@ -44,20 +44,24 @@ public class PlayerControls : MonoBehaviour
         if (Input.GetButtonDown("Equipment"))
         {
             if (inventoryObject.activeSelf == true) inventoryObject.SetActive(false);
-            else inventoryObject.SetActive(true);
+            else
+            {
+                inventoryObject.SetActive(true);
+                
+            }
         }
 
-        if (Input.GetButtonDown("Drop") && test.amount > 0) // dla Input.GetButton("Drop") && test.amount > 0 SRA PIENIEDZMI JAK POYEBANYYYY
+        if (Input.GetButtonDown("Drop") && activeItem.amount > 0) // dla Input.GetButton("Drop") && activeItem.amount > 0 SRA PIENIEDZMI JAK POYEBANYYYY
         {
-            Item duplicateItem = new Item { itemType = test.itemType, amount = test.amount };
-            inventory.RemoveItem(test);
+            Item duplicateItem = new Item { itemType = activeItem.itemType, amount = activeItem.amount };
+            inventory.RemoveItem(activeItem);
             ItemWorld.DropItem(this.transform.position, Facing, duplicateItem);
         }
 
-        if (Input.GetButtonDown("Use") && test.amount > 0)
+        if (Input.GetButtonDown("Use") && activeItem.amount > 0)
         {
-            inventory.UseItem(test);
-            inventory.RemoveItem(test);
+            inventory.UseItem(activeItem);
+            inventory.RemoveItem(activeItem);
         }
     }
 
