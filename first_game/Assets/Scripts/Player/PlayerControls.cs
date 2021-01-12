@@ -157,13 +157,13 @@ public class PlayerControls : MonoBehaviour
 
     private void Flash()
     {
-        renderer.material.color = Color.red;
+        GetComponent<Renderer>().material.color = Color.red;
         Invoke("ResetColor", flashTime);
     }
 
     private void ResetColor()
     {
-        renderer.material.color = origionalColor;
+        GetComponent<Renderer>().material.color = origionalColor;
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
@@ -180,7 +180,7 @@ public class PlayerControls : MonoBehaviour
     void Start()
     {
         IsInputEnabled = true;
-        origionalColor = renderer.material.color;
+        origionalColor = GetComponent<Renderer>().material.color;
     }
 
     void FixedUpdate()
