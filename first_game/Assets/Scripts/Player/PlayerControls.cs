@@ -43,6 +43,7 @@ public class PlayerControls : MonoBehaviour
         inventory = new Inventory(UseItem);
         uiInventory.SetPlayer(this);
         uiInventory.SetInventory(inventory);
+        inventoryObject.SetActive(false);
 
     }
 
@@ -50,8 +51,16 @@ public class PlayerControls : MonoBehaviour
     {
         if (Input.GetButtonDown("Equipment"))
         {
-            if (inventoryObject.activeSelf == true) inventoryObject.SetActive(false);
-            else inventoryObject.SetActive(true);
+            if (inventoryObject.activeSelf == true)
+            {
+                animator.enabled = true;
+                inventoryObject.SetActive(false);
+            }
+            else
+            {
+                animator.enabled = false;
+                inventoryObject.SetActive(true);
+            }
             
         }
 
@@ -91,6 +100,42 @@ public class PlayerControls : MonoBehaviour
             uiInventory.RefreshInventoryItems();
         }
 
+        if (Input.GetButtonDown("Down") && inventoryObject.activeSelf == true)
+        {
+            activeItemNumber += 4;
+            if (activeItemNumber > inventory.GetItemListLength()) activeItemNumber -= 4;
+            int tmp = 0;
+            foreach (Item item in inventory.GetItemList())
+            {
+                tmp++;
+                if (tmp == activeItemNumber)
+                {
+                    activeItem = item;
+                    break;
+                }
+
+            }
+            uiInventory.RefreshInventoryItems();
+        }
+
+        if (Input.GetButtonDown("Up") && inventoryObject.activeSelf == true)
+        {
+            activeItemNumber -= 4;
+            if (activeItemNumber < 1) activeItemNumber += 4;
+            int tmp = 0;
+            foreach (Item item in inventory.GetItemList())
+            {
+                tmp++;
+                if (tmp == activeItemNumber)
+                {
+                    activeItem = item;
+                    break;
+                }
+
+            }
+            uiInventory.RefreshInventoryItems();
+        }
+
         if (Input.GetButtonDown("Drop") && activeItem.amount > 0) // dla Input.GetButton("Drop") && activeItem.amount > 0 SRA PIENIEDZMI JAK POYEBANYYYY
         {
             Item duplicateItem = new Item { itemType = activeItem.itemType, amount = activeItem.amount };
@@ -107,14 +152,8 @@ public class PlayerControls : MonoBehaviour
 
     private void UseItem(Item item)
     {
-        switch (item.itemType)
-        {
-            case Item.ItemType.HealthPotion:
-                Flash();
-                //inventory.RemoveItem(new Item { itemType = Item.ItemType.HealthPotion, amount = 1 });
-                break;
-
-        }
+        Flash();
+        //kod dla UseItem
     }
 
     private void Flash()
