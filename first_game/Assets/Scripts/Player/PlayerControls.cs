@@ -26,10 +26,17 @@ public class PlayerControls : MonoBehaviour
     private Inventory inventory;
     public GameObject inventoryObject;
     public Item activeItem;
+    public int activeItemNumber = 1;
 
     public float flashTime;
     Color origionalColor;
     public SpriteRenderer renderer;
+
+
+    public Item GetActiveItem()
+    {
+        return activeItem;
+    }
 
     private void Awake()
     {
@@ -44,11 +51,44 @@ public class PlayerControls : MonoBehaviour
         if (Input.GetButtonDown("Equipment"))
         {
             if (inventoryObject.activeSelf == true) inventoryObject.SetActive(false);
-            else
+            else inventoryObject.SetActive(true);
+            
+        }
+
+        if (Input.GetButtonDown("Right") && inventoryObject.activeSelf == true)
+        {
+            activeItemNumber++;
+            if (activeItemNumber > inventory.GetItemListLength()) activeItemNumber = inventory.GetItemListLength();
+            int tmp = 0;
+            foreach (Item item in inventory.GetItemList())
             {
-                inventoryObject.SetActive(true);
+                tmp++;
+                if (tmp == activeItemNumber)
+                {
+                    activeItem = item;
+                    break;
+                }
                 
             }
+            uiInventory.RefreshInventoryItems();
+        }
+
+        if (Input.GetButtonDown("Left") && inventoryObject.activeSelf == true)
+        {
+            activeItemNumber--;
+            if (activeItemNumber < 1) activeItemNumber = 1;
+            int tmp = 0;
+            foreach (Item item in inventory.GetItemList())
+            {
+                tmp++;
+                if (tmp == activeItemNumber)
+                {
+                    activeItem = item;
+                    break;
+                }
+                
+            }
+            uiInventory.RefreshInventoryItems();
         }
 
         if (Input.GetButtonDown("Drop") && activeItem.amount > 0) // dla Input.GetButton("Drop") && activeItem.amount > 0 SRA PIENIEDZMI JAK POYEBANYYYY
@@ -132,23 +172,23 @@ public class PlayerControls : MonoBehaviour
         int x = 0;      // od -1 do 1
         int y = 0;      // od -1 do 1    
 
-        if (Inputlist[0] == true && Inputlist[1] == false)
+        if (Inputlist[0] == true && Inputlist[1] == false && inventoryObject.activeSelf == false)
         {
             y = 1;
             Facing = "N";
         }
-        else if (Inputlist[1] == true && Inputlist[0] == false)
+        else if (Inputlist[1] == true && Inputlist[0] == false && inventoryObject.activeSelf == false)
         {
             y = -1;
             Facing = "S";
         }
 
-        if (Inputlist[2] == true && Inputlist[3] == false)
+        if (Inputlist[2] == true && Inputlist[3] == false && inventoryObject.activeSelf == false)
         {
             x = -1;
             Facing = "W";
         }
-        else if (Inputlist[3] == true && Inputlist[2] == false)
+        else if (Inputlist[3] == true && Inputlist[2] == false && inventoryObject.activeSelf == false)
         {
             x = 1;
             Facing = "E";

@@ -7,7 +7,7 @@ public class Inventory {
 
     public event EventHandler OnItemListChanged;
 
-    private List<Item> itemList;
+    public List<Item> itemList;
     private Action<Item> useItemAction;
 
     public Inventory(Action<Item> useItemAction) {
@@ -15,7 +15,11 @@ public class Inventory {
         itemList = new List<Item>();
 
         AddItem(new Item { itemType = Item.ItemType.Coin, amount = 1 });
+        AddItem(new Item { itemType = Item.ItemType.Muszla1, amount = 1 });
+        AddItem(new Item { itemType = Item.ItemType.Muszla2, amount = 1 });
         AddItem(new Item { itemType = Item.ItemType.Muszla3, amount = 1 });
+        AddItem(new Item { itemType = Item.ItemType.Muszla4, amount = 1 });
+        AddItem(new Item { itemType = Item.ItemType.Muszla5, amount = 1 });
     }
 
     public void AddItem(Item item) {
@@ -60,6 +64,14 @@ public class Inventory {
 
     public List<Item> GetItemList() {
         return itemList;
+    }
+
+    public int GetItemListLength()
+    {
+        int x = 0;
+        foreach (Item item in itemList) x++;
+
+        return x;
     }
 
 }

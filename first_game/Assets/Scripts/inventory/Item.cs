@@ -18,6 +18,7 @@ public class Item {
 
     public ItemType itemType;
     public int amount;
+    public bool active = false;
 
 
     public Sprite GetSprite() {
