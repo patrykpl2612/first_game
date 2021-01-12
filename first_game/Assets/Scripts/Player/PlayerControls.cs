@@ -30,7 +30,6 @@ public class PlayerControls : MonoBehaviour
 
     public float flashTime;
     Color origionalColor;
-    public SpriteRenderer renderer;
 
 
     public Item GetActiveItem()

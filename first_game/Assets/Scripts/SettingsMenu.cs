@@ -4,37 +4,43 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
 
-public class ButtonModule : MonoBehaviour
+public class SettingsMenu : MonoBehaviour
 {
+    public AudioMixer audioMixer;
+    public float volume;
+    public Slider slider;
+
     private int numberofbuttons;
     private int firstbutton;
     private Scene scene;
-    private GameObject Player;
+    public GameObject Player;
     public GameObject menuObject;
     public GameObject settingsObject;
-    
+
 
     void Start()
     {
         numberofbuttons = this.gameObject.transform.childCount;
         scene = SceneManager.GetActiveScene();
-        Player = GameObject.Find("/Player");
         firstbutton = 0;
         EscapePressed();
     }
-    
+
     void OnEnable()
     {
         EscapePressed();
+
     }
-    
+
     void Update()
     {
+        if (Input.GetButtonDown("Left")) Debug.Log("LEWO KURWA");
 
         if (Input.GetButtonDown("Down"))
         {
-            if (firstbutton==numberofbuttons-1)
+            if (firstbutton == numberofbuttons - 1)
             {
                 firstbutton = 0;
                 NextButton(firstbutton);
@@ -47,56 +53,62 @@ public class ButtonModule : MonoBehaviour
 
         if (Input.GetButtonDown("Up"))
         {
-            if (firstbutton==0)
+            if (firstbutton == 0)
             {
-                firstbutton = numberofbuttons-1;
+                firstbutton = numberofbuttons - 1;
                 NextButton(firstbutton);
             }
             else
             {
                 NextButton(--firstbutton);
             }
-            
+
         }
         if (Input.GetButtonDown("Talk"))
         {
-            if (firstbutton==0)
+            //if (firstbutton == 0)
+            //{
+            //    if (Input.GetButtonDown("Talk")) ;
+            //}
+
+            //if (firstbutton == 1)
+            //{
+            //    if (Input.GetButtonDown("Talk")) ;
+            //}
+
+            if (firstbutton == 2)
             {
-                if (UnityEngine.SceneManagement.SceneManager.GetSceneByBuildIndex(0) == scene)
+
+                if (Input.GetButtonDown("Talk"))
                 {
-                    UnityEngine.SceneManagement.SceneManager.LoadScene(1);
+                    Debug.Log(slider.value);
+                    slider.value -= 5f;
+                    volume = slider.value;
+                    audioMixer.SetFloat("volume", volume);
                 }
-                else
+                
+                if (Input.GetButtonDown("Use"))
                 {
-                    Player.GetComponent<PlayerMenu>().ShowMenu();
+                    Debug.Log(slider.value);
+                    slider.value += 5f;
+                    volume = slider.value;
+                    audioMixer.SetFloat("volume", volume);
                 }
             }
 
-
-            if (firstbutton == 1) //open settings
+            if (firstbutton == 3) //close settings
             {
                 if (Input.GetButtonDown("Talk"))
                 {
-                     menuObject.SetActive(false);
-                     settingsObject.SetActive(true);
+                    settingsObject.SetActive(false);
+                    menuObject.SetActive(true);
                 }
             }
 
-            if (firstbutton == 2) 
-            {
-               
-                if (UnityEngine.SceneManagement.SceneManager.GetSceneByBuildIndex(0) == scene)
-                {
-                    Application.Quit();
-                }
-                else
-                {
-                    Player.GetComponent<PlayerMenu>().togglePause();
-                    UnityEngine.SceneManagement.SceneManager.LoadScene(0);
-                    
-                }
-            }
+            
         }
+
+        
     }
 
     public void NextButton(int x)
@@ -109,4 +121,11 @@ public class ButtonModule : MonoBehaviour
         firstbutton = 0;
         NextButton(0);
     }
+
+    public void SetQuality (int qualityIndex)
+    {
+        QualitySettings.SetQualityLevel(qualityIndex);
+    }
+
+  
 }
