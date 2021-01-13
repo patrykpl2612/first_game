@@ -5,7 +5,7 @@ using UnityEngine;
 public class NPCDealer : MonoBehaviour
 {
     public float smooth = 1f;
-
+    public Animator animator;
     private Quaternion targetRotation;
 
     public int x = 1;
@@ -35,16 +35,21 @@ public class NPCDealer : MonoBehaviour
     {
         float dist = Vector3.Distance(ThePlayer.transform.position, transform.position);
         
+
         if (dist > Radius)
         {
+            animator.SetBool("walk", false);
+           
             Vector3 movement = new Vector3(x, 0, 0);
             movement *= Time.fixedDeltaTime;
             transform.Translate(movement);
+            
         }
+        else animator.SetBool("walk", true);
 
 
-        
-        
+
+
 
     }
 }
