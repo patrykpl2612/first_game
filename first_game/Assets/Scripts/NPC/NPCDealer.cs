@@ -22,6 +22,17 @@ public class NPCDealer : MonoBehaviour
     public Transform target;
     private ItemWorld itemWorld;
 
+
+    //do testow--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    public NPCDialogue dialogue;
+    public GameObject Player;
+    public AudioSource audioSource;
+    private bool talking;
+    private Vector3 LastPlayerPos;
+    private Vector3 NewPlayerPos;
+    private Vector3 Location;
+    //koniec testow--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
     void Start()
     {
 
@@ -99,5 +110,58 @@ public class NPCDealer : MonoBehaviour
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+        //do testow------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+        if (Vector3.Distance(transform.position, Player.transform.position) <= 4f)// sprawdzanie czy gracz jest wystarczajaco blisko by pogadac z npc
+        {
+            PlayerControls.InReachOfNpc = true;
+        }
+        else
+        {
+            PlayerControls.InReachOfNpc = false;
+        }
+
+        if (Time.timeScale == 1f)
+        {
+            if (talking == true && Input.GetButtonDown("Talk"))
+            {
+                talking = FindObjectOfType<DialogueManager>().DisplayNextSentence();
+            }
+            else if (Input.GetButtonDown("Talk") && Vector3.Distance(transform.position, Player.transform.position) < 4f)
+            {
+                TriggerDialogue();
+                talking = true;
+            }
+        }
     }
+    public void TriggerDialogue()
+    {
+        Debug.Log(dialogue.name);
+        Debug.Log(dialogue.sentences[0]);
+        Debug.Log(dialogue.sentences[1]);
+        Debug.Log(dialogue.sentences[2]);
+        FindObjectOfType<DealerDialogueMenager>().StartDialogue(dialogue);
+    }
+    public void PlayLetterSound()
+    {
+        audioSource.Play();
+    }
+
+
+
+    //koniec testow------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
 }
