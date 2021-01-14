@@ -17,7 +17,7 @@ public class DealerDialogueMenager : MonoBehaviour
 
     }
 
-    public void StartDialogue(NPCDialogue dialogue)
+    public void StartDialogue(Dialogue dialogue)
     {
         animator.SetBool("DialogueOpen", true);
         nameText.text = dialogue.name;
@@ -63,7 +63,7 @@ public class DealerDialogueMenager : MonoBehaviour
             {
                 yield return null;
             }
-            NPC.GetComponent<NPC>().PlayLetterSound();
+            NPC.GetComponent<NPCDealer>().PlayLetterSound();
         }
     }
     bool EndDialogue()

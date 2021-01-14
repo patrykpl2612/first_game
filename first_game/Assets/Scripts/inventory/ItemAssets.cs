@@ -21,5 +21,6 @@ public class ItemAssets : MonoBehaviour
     public Sprite muszla3Sprite;
     public Sprite muszla4Sprite;
     public Sprite muszla5Sprite;
+    public Sprite SodaCaneSprite;
 
 }

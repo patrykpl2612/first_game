@@ -13,7 +13,8 @@ public class Item {
         Muszla4,
         Muszla5,
         Coin,
-        HealthPotion
+        HealthPotion,
+        SodaCane,
     }
 
     public ItemType itemType;
@@ -31,6 +32,7 @@ public class Item {
         case ItemType.Muszla3:         return ItemAssets.Instance.muszla3Sprite;
         case ItemType.Muszla4:         return ItemAssets.Instance.muszla4Sprite;
         case ItemType.Muszla5:         return ItemAssets.Instance.muszla5Sprite;
+        case ItemType.SodaCane:        return ItemAssets.Instance.SodaCaneSprite;
         }
     }
 
@@ -54,7 +56,8 @@ public class Item {
             case ItemType.Muszla3:
             case ItemType.Muszla4:
             case ItemType.Muszla5:
-            return true;
+            case ItemType.SodaCane:
+                return true;
         case ItemType.HealthPotion:
             return false;
         }

@@ -11,20 +11,22 @@ public class NPCDealer : MonoBehaviour
     private Quaternion targetRotation;
     private Inventory inventory;
     public GameObject inventoryObject;
+    
 
     public int x = 1;
+    //private int tempX = 1;
     // Start is called before the first frame update
 
 
     public GameObject ThePlayer;
     public PlayerControls player;
+    public Transform playerTransform;
     public float Radius;
-    public Transform target;
     private ItemWorld itemWorld;
 
 
     //do testow--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    public NPCDialogue dialogue;
+    public Dialogue dialogue;
     public GameObject Player;
     public AudioSource audioSource;
     private bool talking;
@@ -35,7 +37,7 @@ public class NPCDealer : MonoBehaviour
 
     void Start()
     {
-
+        talking = false;
     }
 
     private int GetPrice(string itemType)
@@ -50,6 +52,7 @@ public class NPCDealer : MonoBehaviour
             case "Muszla3":         return 5;
             case "Muszla4":         return 6;
             case "Muszla5":         return 7;
+            case "SodaCane":        return 8000;
         }
     }
 
@@ -102,9 +105,26 @@ public class NPCDealer : MonoBehaviour
             Vector3 movement = new Vector3(x, 0, 0);
             movement *= Time.fixedDeltaTime;
             transform.Translate(movement);
-
         }
-        else { animator.SetBool("walk", false); animator.SetBool("idle", true); }
+        else 
+        { 
+            animator.SetBool("walk", false); 
+            animator.SetBool("idle", true); 
+            if(player.transform.position.x < this.transform.position.x)
+            {
+                Vector3 newScale = transform.localScale;
+                newScale.x = -1;
+                transform.localScale = newScale;
+                x = Mathf.Abs(x) * -1;
+            }
+            else
+            {
+                Vector3 newScale = transform.localScale;
+                newScale.x = 1;
+                transform.localScale = newScale;
+                x = Mathf.Abs(x);
+            }
+        }
 
 
 
@@ -148,11 +168,7 @@ public class NPCDealer : MonoBehaviour
     }
     public void TriggerDialogue()
     {
-        Debug.Log(dialogue.name);
-        Debug.Log(dialogue.sentences[0]);
-        Debug.Log(dialogue.sentences[1]);
-        Debug.Log(dialogue.sentences[2]);
-        FindObjectOfType<DealerDialogueMenager>().StartDialogue(dialogue);
+        FindObjectOfType<DialogueManager>().StartDialogue(dialogue);
     }
     public void PlayLetterSound()
     {

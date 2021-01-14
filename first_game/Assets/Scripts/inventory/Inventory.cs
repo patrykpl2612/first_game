@@ -14,11 +14,11 @@ public class Inventory {
         this.useItemAction = useItemAction;
         itemList = new List<Item>();
 
-        AddItem(new Item { itemType = Item.ItemType.Coin, amount = 1 });
-        AddItem(new Item { itemType = Item.ItemType.Muszla1, amount = 1 });
-        AddItem(new Item { itemType = Item.ItemType.Muszla2, amount = 1 });
-        AddItem(new Item { itemType = Item.ItemType.Muszla3, amount = 1 });
-        AddItem(new Item { itemType = Item.ItemType.Muszla4, amount = 1 });
+        AddItem(new Item { itemType = Item.ItemType.Coin, amount = 19 });
+        AddItem(new Item { itemType = Item.ItemType.Muszla1, amount = 10 });
+        AddItem(new Item { itemType = Item.ItemType.Muszla2, amount = 4 });
+        AddItem(new Item { itemType = Item.ItemType.Muszla3, amount = 3 });
+        AddItem(new Item { itemType = Item.ItemType.Muszla4, amount = 2 });
         AddItem(new Item { itemType = Item.ItemType.Muszla5, amount = 1 });
     }
 
