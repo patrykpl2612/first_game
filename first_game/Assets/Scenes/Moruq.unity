@@ -7698,6 +7698,7 @@ MonoBehaviour:
   player: {fileID: 500158266}
   playerTransform: {fileID: 0}
   Radius: 4
+  howMuchitemsToSell: 0
 --- !u!61 &1807966560
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -7843,7 +7844,7 @@ MonoBehaviour:
     - "I znajd\u017A mi z wod\u0105 puszk\u0119, \njest ukryta gdzie\u015B"
     - 
   Player: {fileID: 0}
-  audioSource: {fileID: 1527692186}
+  audioSource: {fileID: 1807966561}
   Follower: 0
   FollowingDistance: 3
   Fastness: 2
