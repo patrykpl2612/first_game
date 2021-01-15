@@ -35,6 +35,8 @@ public class NPCDealer : MonoBehaviour
     //private Vector3 Location;
     //koniec testow--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+    public int howMuchitemsToSell;
+
     void Start()
     {
         //talking = false;
