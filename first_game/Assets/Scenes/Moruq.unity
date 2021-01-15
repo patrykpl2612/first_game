@@ -2612,8 +2612,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcd6703500f0e194cbf1260f1479d78c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smoothTimeX: 0.2
-  smoothTimeY: 0.2
+  smoothTimeX: 0
+  smoothTimeY: 0
   player: {fileID: 500158265}
 --- !u!1 &522709144
 GameObject:
