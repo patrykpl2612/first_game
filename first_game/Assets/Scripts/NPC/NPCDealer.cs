@@ -11,7 +11,7 @@ public class NPCDealer : MonoBehaviour
     private Quaternion targetRotation;
     private Inventory inventory;
     public GameObject inventoryObject;
-    
+
 
     public int x = 1;
     //private int tempX = 1;
@@ -26,18 +26,18 @@ public class NPCDealer : MonoBehaviour
 
 
     //do testow--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    public Dialogue dialogue;
-    public GameObject Player;
-    public AudioSource audioSource;
-    private bool talking;
-    private Vector3 LastPlayerPos;
-    private Vector3 NewPlayerPos;
-    private Vector3 Location;
+    //public Dialogue dialogue;
+    //public GameObject Player;
+    //public AudioSource audioSource;
+    //private bool talking;
+    //private Vector3 LastPlayerPos;
+    //private Vector3 NewPlayerPos;
+    //private Vector3 Location;
     //koniec testow--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     void Start()
     {
-        talking = false;
+        //talking = false;
     }
 
     private int GetPrice(string itemType)
@@ -45,22 +45,24 @@ public class NPCDealer : MonoBehaviour
         switch (itemType)
         {
             default:
-            case "HealthPotion":    return 1;
-            case "Coin":            return 1;
-            case "Muszla1":         return 3;
-            case "Muszla2":         return 4;
-            case "Muszla3":         return 5;
-            case "Muszla4":         return 6;
-            case "Muszla5":         return 7;
-            case "SodaCane":        return 8000;
+            case "HealthPotion": return 1;
+            case "Coin": return 1;
+            case "Muszla1": return 3;
+            case "Muszla2": return 4;
+            case "Muszla3": return 5;
+            case "Muszla4": return 6;
+            case "Muszla5": return 7;
+            case "SodaCane": return 8000;
         }
     }
 
     IEnumerator takeItem()
     {
+
         int priceForItem = GetPrice(itemWorld.GetItem().itemType.ToString());
         int amount = itemWorld.GetItem().amount;
         Item duplicateItem = new Item { itemType = Item.ItemType.Coin, amount = priceForItem * amount };
+        itemWorld.DestroySelf();
         animator.SetBool("walk", false);
         yield return new WaitForSeconds(0.4f);
         animator.SetBool("jump", true);
@@ -68,20 +70,20 @@ public class NPCDealer : MonoBehaviour
         animator.SetBool("jump", false);
         yield return new WaitForSeconds(1);
         ItemWorld.DropItem(this.transform.position, "S", duplicateItem);
-        itemWorld.DestroySelf();
+
         yield return new WaitForSeconds(1);
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        
-        
+
+
         itemWorld = collider.GetComponent<ItemWorld>();
         if (itemWorld != null)
         {
-            
+
             StartCoroutine(takeItem());
-            
+
         }
         else
         {
@@ -106,11 +108,11 @@ public class NPCDealer : MonoBehaviour
             movement *= Time.fixedDeltaTime;
             transform.Translate(movement);
         }
-        else 
-        { 
-            animator.SetBool("walk", false); 
-            animator.SetBool("idle", true); 
-            if(player.transform.position.x < this.transform.position.x)
+        else
+        {
+            animator.SetBool("walk", false);
+            animator.SetBool("idle", true);
+            if (player.transform.position.x < this.transform.position.x)
             {
                 Vector3 newScale = transform.localScale;
                 newScale.x = -1;
@@ -128,52 +130,52 @@ public class NPCDealer : MonoBehaviour
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //do testow------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-        if (Vector3.Distance(transform.position, Player.transform.position) <= 4f)// sprawdzanie czy gracz jest wystarczajaco blisko by pogadac z npc
-        {
-            PlayerControls.InReachOfNpc = true;
-        }
-        else
-        {
-            PlayerControls.InReachOfNpc = false;
-        }
-
-        if (Time.timeScale == 1f)
-        {
-            if (talking == true && Input.GetButtonDown("Talk"))
-            {
-                talking = FindObjectOfType<DialogueManager>().DisplayNextSentence();
-            }
-            else if (Input.GetButtonDown("Talk") && Vector3.Distance(transform.position, Player.transform.position) < 4f)
-            {
-                TriggerDialogue();
-                talking = true;
-            }
-        }
     }
-    public void TriggerDialogue()
-    {
-        FindObjectOfType<DialogueManager>().StartDialogue(dialogue);
-    }
-    public void PlayLetterSound()
-    {
-        audioSource.Play();
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+    //do testow------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+    //    if (Vector3.Distance(transform.position, Player.transform.position) <= 4f)// sprawdzanie czy gracz jest wystarczajaco blisko by pogadac z npc
+    //    {
+    //        PlayerControls.InReachOfNpc = true;
+    //    }
+    //    else
+    //    {
+    //        PlayerControls.InReachOfNpc = false;
+    //    }
+
+    //    if (Time.timeScale == 1f)
+    //    {
+    //        if (talking == true && Input.GetButtonDown("Talk"))
+    //        {
+    //            talking = FindObjectOfType<DialogueManager>().DisplayNextSentence();
+    //        }
+    //        else if (Input.GetButtonDown("Talk") && Vector3.Distance(transform.position, Player.transform.position) < 4f)
+    //        {
+    //            TriggerDialogue();
+    //            talking = true;
+    //        }
+    //    }
+    //}
+    //public void TriggerDialogue()
+    //{
+    //    FindObjectOfType<DialogueManager>().StartDialogue(dialogue);
+    //}
+    //public void PlayLetterSound()
+    //{
+    //    audioSource.Play();
+    //}
 
 
 
