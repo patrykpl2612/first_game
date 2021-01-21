@@ -23,10 +23,11 @@ public class PlayerControls : MonoBehaviour
     public int default_animation_speed = 2;
     public float default_player_speed = 0.1f;
 
-    private Inventory inventory;
+    public Inventory inventory;
     public GameObject inventoryObject;
     public Item activeItem;
     public int activeItemNumber = 1;
+    public bool disableMovement = false;
 
     public float flashTime;
     Color origionalColor;
@@ -48,104 +49,107 @@ public class PlayerControls : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetButtonDown("Equipment"))
+        if (!disableMovement)
         {
-            if (inventoryObject.activeSelf == true)
+            if (Input.GetButtonDown("Equipment"))
             {
-                animator.enabled = true;
-                inventoryObject.SetActive(false);
-            }
-            else
-            {
-                animator.enabled = false;
-                inventoryObject.SetActive(true);
-            }
-            
-        }
-
-        if (Input.GetButtonDown("Right") && inventoryObject.activeSelf == true)
-        {
-            activeItemNumber++;
-            if (activeItemNumber > inventory.GetItemListLength()) activeItemNumber = inventory.GetItemListLength();
-            int tmp = 0;
-            foreach (Item item in inventory.GetItemList())
-            {
-                tmp++;
-                if (tmp == activeItemNumber)
+                if (inventoryObject.activeSelf == true)
                 {
-                    activeItem = item;
-                    break;
+                    animator.enabled = true;
+                    inventoryObject.SetActive(false);
                 }
-                
-            }
-            uiInventory.RefreshInventoryItems();
-        }
-
-        if (Input.GetButtonDown("Left") && inventoryObject.activeSelf == true)
-        {
-            activeItemNumber--;
-            if (activeItemNumber < 1) activeItemNumber = 1;
-            int tmp = 0;
-            foreach (Item item in inventory.GetItemList())
-            {
-                tmp++;
-                if (tmp == activeItemNumber)
+                else
                 {
-                    activeItem = item;
-                    break;
-                }
-                
-            }
-            uiInventory.RefreshInventoryItems();
-        }
-
-        if (Input.GetButtonDown("Down") && inventoryObject.activeSelf == true)
-        {
-            activeItemNumber += 4;
-            if (activeItemNumber > inventory.GetItemListLength()) activeItemNumber -= 4;
-            int tmp = 0;
-            foreach (Item item in inventory.GetItemList())
-            {
-                tmp++;
-                if (tmp == activeItemNumber)
-                {
-                    activeItem = item;
-                    break;
+                    animator.enabled = false;
+                    inventoryObject.SetActive(true);
                 }
 
             }
-            uiInventory.RefreshInventoryItems();
-        }
 
-        if (Input.GetButtonDown("Up") && inventoryObject.activeSelf == true)
-        {
-            activeItemNumber -= 4;
-            if (activeItemNumber < 1) activeItemNumber += 4;
-            int tmp = 0;
-            foreach (Item item in inventory.GetItemList())
+            if (Input.GetButtonDown("Right") && inventoryObject.activeSelf == true)
             {
-                tmp++;
-                if (tmp == activeItemNumber)
+                activeItemNumber++;
+                if (activeItemNumber > inventory.GetItemListLength()) activeItemNumber = inventory.GetItemListLength();
+                int tmp = 0;
+                foreach (Item item in inventory.GetItemList())
                 {
-                    activeItem = item;
-                    break;
+                    tmp++;
+                    if (tmp == activeItemNumber)
+                    {
+                        activeItem = item;
+                        break;
+                    }
+
                 }
-
+                uiInventory.RefreshInventoryItems();
             }
-            uiInventory.RefreshInventoryItems();
-        }
 
-        if (Input.GetButtonDown("Drop") && activeItem.amount > 0) // dla Input.GetButton("Drop") && activeItem.amount > 0 SRA PIENIEDZMI JAK POYEBANYYYY
-        {
-            Item duplicateItem = new Item { itemType = activeItem.itemType, amount = activeItem.amount };
-            inventory.RemoveItem(activeItem);
-            ItemWorld.DropItem(this.transform.position, Facing, duplicateItem);
-        }
+            if (Input.GetButtonDown("Left") && inventoryObject.activeSelf == true)
+            {
+                activeItemNumber--;
+                if (activeItemNumber < 1) activeItemNumber = 1;
+                int tmp = 0;
+                foreach (Item item in inventory.GetItemList())
+                {
+                    tmp++;
+                    if (tmp == activeItemNumber)
+                    {
+                        activeItem = item;
+                        break;
+                    }
 
-        if (Input.GetButtonDown("Use") && activeItem.amount > 0)
-        {
-            inventory.UseItem(activeItem);
-            inventory.RemoveItem(activeItem);
+                }
+                uiInventory.RefreshInventoryItems();
+            }
+
+            if (Input.GetButtonDown("Down") && inventoryObject.activeSelf == true)
+            {
+                activeItemNumber += 4;
+                if (activeItemNumber > inventory.GetItemListLength()) activeItemNumber -= 4;
+                int tmp = 0;
+                foreach (Item item in inventory.GetItemList())
+                {
+                    tmp++;
+                    if (tmp == activeItemNumber)
+                    {
+                        activeItem = item;
+                        break;
+                    }
+
+                }
+                uiInventory.RefreshInventoryItems();
+            }
+
+            if (Input.GetButtonDown("Up") && inventoryObject.activeSelf == true)
+            {
+                activeItemNumber -= 4;
+                if (activeItemNumber < 1) activeItemNumber += 4;
+                int tmp = 0;
+                foreach (Item item in inventory.GetItemList())
+                {
+                    tmp++;
+                    if (tmp == activeItemNumber)
+                    {
+                        activeItem = item;
+                        break;
+                    }
+
+                }
+                uiInventory.RefreshInventoryItems();
+            }
+
+            if (Input.GetButtonDown("Drop") && activeItem.amount > 0) // dla Input.GetButton("Drop") && activeItem.amount > 0 SRA PIENIEDZMI JAK POYEBANYYYY
+            {
+                Item duplicateItem = new Item { itemType = activeItem.itemType, amount = activeItem.amount };
+                inventory.RemoveItem(activeItem);
+                ItemWorld.DropItem(this.transform.position, Facing, duplicateItem);
+            }
+
+            if (Input.GetButtonDown("Use") && activeItem.amount > 0)
+            {
+                inventory.UseItem(activeItem);
+                inventory.RemoveItem(activeItem);
+            }
         }
     }
 
@@ -186,7 +190,7 @@ public class PlayerControls : MonoBehaviour
     void FixedUpdate()
     {
 
-        if (IsInputEnabled && this.GetComponent<PlayerMenu>().IsShowed() == false)
+        if (IsInputEnabled && this.GetComponent<PlayerMenu>().IsShowed() == false && !disableMovement)
         {
             bool up = Input.GetButton("Up");
             bool down = Input.GetButton("Down");
