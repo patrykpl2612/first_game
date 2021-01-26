@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class Item {
+public class Item
+{
 
-    public enum ItemType {
+    public enum ItemType
+    {
         Muszla1,
         Muszla2,
         Muszla3,
@@ -22,17 +24,19 @@ public class Item {
     public bool active = false;
 
 
-    public Sprite GetSprite() {
-        switch (itemType) {
-        default:
-        case ItemType.HealthPotion:    return ItemAssets.Instance.healthPotionSprite;
-        case ItemType.Coin:            return ItemAssets.Instance.coinSprite;
-        case ItemType.Muszla1:         return ItemAssets.Instance.muszla1Sprite;
-        case ItemType.Muszla2:         return ItemAssets.Instance.muszla2Sprite;
-        case ItemType.Muszla3:         return ItemAssets.Instance.muszla3Sprite;
-        case ItemType.Muszla4:         return ItemAssets.Instance.muszla4Sprite;
-        case ItemType.Muszla5:         return ItemAssets.Instance.muszla5Sprite;
-        case ItemType.SodaCane:        return ItemAssets.Instance.SodaCaneSprite;
+    public Sprite GetSprite()
+    {
+        switch (itemType)
+        {
+            default:
+            case ItemType.HealthPotion: return ItemAssets.Instance.healthPotionSprite;
+            case ItemType.Coin: return ItemAssets.Instance.coinSprite;
+            case ItemType.Muszla1: return ItemAssets.Instance.muszla1Sprite;
+            case ItemType.Muszla2: return ItemAssets.Instance.muszla2Sprite;
+            case ItemType.Muszla3: return ItemAssets.Instance.muszla3Sprite;
+            case ItemType.Muszla4: return ItemAssets.Instance.muszla4Sprite;
+            case ItemType.Muszla5: return ItemAssets.Instance.muszla5Sprite;
+            case ItemType.SodaCane: return ItemAssets.Instance.SodaCaneSprite;
         }
     }
 
@@ -47,9 +51,11 @@ public class Item {
     //    }
     //}
 
-    public bool IsStackable() {
-        switch (itemType) {
-        default:
+    public bool IsStackable()
+    {
+        switch (itemType)
+        {
+            default:
             case ItemType.Coin:
             case ItemType.Muszla1:
             case ItemType.Muszla2:
@@ -58,9 +64,31 @@ public class Item {
             case ItemType.Muszla5:
             case ItemType.SodaCane:
                 return true;
-        case ItemType.HealthPotion:
-            return false;
+            case ItemType.HealthPotion:
+                return false;
         }
     }
+    public string Name()
+    {
+        switch (itemType)
+        {
+            default:
+                return "a chuj wie co podniosles";
+            case ItemType.Coin:
+                return "Coin";
+            case ItemType.Muszla1:
+                return "Muszla1";
+            case ItemType.Muszla2:
+                return "Muszla2";
+            case ItemType.Muszla3:
+                return "Muszla3";
+            case ItemType.Muszla4:
+                return "Muszla4";
+            case ItemType.SodaCane:
+                return "SodaCane";
+            case ItemType.HealthPotion:
+                return "HealthPotion";
+        }
 
+    }
 }

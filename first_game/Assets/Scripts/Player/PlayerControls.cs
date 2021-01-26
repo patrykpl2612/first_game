@@ -27,6 +27,7 @@ public class PlayerControls : MonoBehaviour
     public GameObject inventoryObject;
     public Item activeItem;
     public int activeItemNumber = 1;
+    public bool ItemTalking = false;
 
     public float flashTime;
     Color origionalColor;
@@ -60,7 +61,7 @@ public class PlayerControls : MonoBehaviour
                 animator.enabled = false;
                 inventoryObject.SetActive(true);
             }
-            
+
         }
 
         if (Input.GetButtonDown("Right") && inventoryObject.activeSelf == true)
@@ -76,7 +77,7 @@ public class PlayerControls : MonoBehaviour
                     activeItem = item;
                     break;
                 }
-                
+
             }
             uiInventory.RefreshInventoryItems();
         }
@@ -94,7 +95,7 @@ public class PlayerControls : MonoBehaviour
                     activeItem = item;
                     break;
                 }
-                
+
             }
             uiInventory.RefreshInventoryItems();
         }
@@ -147,8 +148,12 @@ public class PlayerControls : MonoBehaviour
             inventory.UseItem(activeItem);
             inventory.RemoveItem(activeItem);
         }
-    }
 
+        if (ItemTalking == true && Input.GetButtonDown("Talk"))
+        {
+            ItemTalking = FindObjectOfType<DialogueManager>().DisplayNextSentence();
+        }
+    }
     private void UseItem(Item item)
     {
         Flash();
@@ -172,7 +177,15 @@ public class PlayerControls : MonoBehaviour
         if (itemWorld != null)
         {
             // Touching Item
-            inventory.AddItem(itemWorld.GetItem());
+            Item pickedUpItem = itemWorld.GetItem();
+            inventory.AddItem(pickedUpItem);
+
+            Dialogue dialog = new Dialogue();   
+            string[] sentences = {pickedUpItem.Name(),""};
+            ItemTalking = true;
+            dialog.name = "ITEM FOUND!";
+            dialog.sentences = sentences;
+            FindObjectOfType<DialogueManager>().StartDialogue(dialog);      
             itemWorld.DestroySelf();
         }
     }

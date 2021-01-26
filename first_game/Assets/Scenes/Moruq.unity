@@ -2120,6 +2120,7 @@ MonoBehaviour:
     amount: 0
     active: 0
   activeItemNumber: 0
+  ItemTalking: 0
   flashTime: 0.05
 --- !u!50 &500158267
 Rigidbody2D:

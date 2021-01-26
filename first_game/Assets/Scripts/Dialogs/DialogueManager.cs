@@ -63,7 +63,15 @@ public class DialogueManager : MonoBehaviour
             {
                 yield return null;
             }
-            NPC.GetComponent<NPC>().PlayLetterSound();
+            try
+            {
+                NPC.GetComponent<NPC>().PlayLetterSound();
+            }
+            catch
+            {
+                Debug.Log("dupa");
+            }
+
         }
     }
     bool EndDialogue()
