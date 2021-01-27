@@ -13,6 +13,7 @@ public class UI_Inventory : MonoBehaviour
     private Transform itemSlotTemplate;
     private Transform border;
     private PlayerControls player;
+    private Chest chest;
 
     private void Awake() {
         itemSlotContainer = transform.Find("itemSlotContainer");
@@ -22,6 +23,12 @@ public class UI_Inventory : MonoBehaviour
     public void SetPlayer(PlayerControls player) {
         this.player = player;
     }
+
+    public void SetChest(Chest chest)
+    {
+        this.chest = chest;
+    }
+
 
     public void SetInventory(Inventory inventory) {
         this.inventory = inventory;
@@ -52,10 +59,22 @@ public class UI_Inventory : MonoBehaviour
             Image image = itemSlotRectTransform.Find("image").GetComponent<Image>();
             image.sprite = item.GetSprite();
 
-            if (player.GetActiveItem() == item)
+            if (player != null)
             {
-                Image border = itemSlotRectTransform.Find("border").GetComponent<Image>();
-                border.GetComponent<Image>().color = Color.red;
+                if (player.GetActiveItem() == item)
+                {
+                    Image border = itemSlotRectTransform.Find("border").GetComponent<Image>();
+                    border.GetComponent<Image>().color = Color.red;
+                }
+            }
+
+            if (chest != null)
+            {
+                if (chest.GetActiveItem() == item)
+                {
+                    Image border = itemSlotRectTransform.Find("border").GetComponent<Image>();
+                    border.GetComponent<Image>().color = Color.red;
+                }
             }
 
             TextMeshProUGUI uiText = itemSlotRectTransform.Find("amountText").GetComponent<TextMeshProUGUI>();
