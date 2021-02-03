@@ -45,13 +45,13 @@ public class Chest : MonoBehaviour
                 {
                     //animator.enabled = true;
                     inventoryObject.SetActive(false);
-                    player.disableMovement = false;
+                    //player.disableMovement = false;   // czy chodzilo ci o wylaczenie mozliwosci ruchu gracza?? jak tak to po to mamy "IsInputEnabled" nie mamy disableMovement
                 }
                 else
                 {
                     //animator.enabled = false;
                     inventoryObject.SetActive(true);
-                    player.disableMovement = true;
+                  //player.disableMovement = true;       // czy chodzilo ci o wylaczenie mozliwosci ruchu gracza?? jak tak to po to mamy "IsInputEnabled" nie mamy disableMovement
                 }
 
             }

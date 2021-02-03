@@ -23,7 +23,7 @@ public class PlayerControls : MonoBehaviour
     public int default_animation_speed = 2;
     public float default_player_speed = 0.1f;
 
-    private Inventory inventory;
+    public Inventory inventory;
     public GameObject inventoryObject;
     public Item activeItem;
     public int activeItemNumber = 1;
